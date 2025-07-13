@@ -167,21 +167,21 @@
                 <input type="email" id="email" name="email" required class="rounded-lg">
             </div>
 
-            <!-- Campo: Data de início -->
-            <div class="form-group">
-                <label for="dataInicio">Data de início:</label>
-                <input type="date" id="dataInicio" name="dataInicio" required class="rounded-lg">
-            </div>
-
             <!-- Campo: Contato de emergência (Nome e Telefone Combinados) -->
             <div class="form-group">
                 <label for="contatoEmergencia">Nome e Telefone do Contato de Emergência:</label>
                 <input type="text" id="contatoEmergencia" name="contatoEmergencia" placeholder="Ex: Nome do Contato (XX) XXXXX-XXXX" required class="rounded-lg">
             </div>
 
+            <!-- Campo: Data de início -->
+            <div class="form-group">
+                <label for="dataInicio">Data de início:</label>
+                <input type="date" id="dataInicio" name="dataInicio" required class="rounded-lg">
+            </div>
+
             <!-- Campo: Plano escolhido - 3 ou 6 meses ou Casal ou Online -->
             <div class="form-group">
-                <label>Plano escolhido:</label>
+                <label>Escolha seu Plano:</label> <!-- Alterado aqui -->
                 <div class="radio-group flex flex-wrap gap-4 mt-2">
                     <label>
                         <input type="radio" name="plano" value="Individual - 3 meses" required>
@@ -434,7 +434,12 @@
             if (acrescimosPagamento[formaPagamento] !== undefined) {
                 if (formaPagamento === 'Boleto (acréscimo R$5,00 por boleto)') {
                     valorFinalMensalCalculado = valorBaseMensal + acrescimosPagamento[formaPagamento]; // Taxa fixa por mês
-                } else if (acrescimosPagamento[formaPagamento] > 0 && acrescimosPagamento[formaPagamento] < 1) {
+                } else if (formaPagamento === 'Crédito (parcelado até 6x)') {
+                    // Para parcelado, a taxa é sobre o valor total do plano e não sobre o mensal
+                    let acrescimoTotal = valorTotalPlanoBase * acrescimosPagamento[formaPagamento];
+                    valorFinalMensalCalculado = (valorTotalPlanoBase + acrescimoTotal) / mesesPlano;
+                }
+                else if (acrescimosPagamento[formaPagamento] > 0 && acrescimosPagamento[formaPagamento] < 1) {
                     // Se for uma porcentagem, aplica ao valor total do plano e divide pelos meses para obter o valor mensal
                     let acrescimoTotal = valorTotalPlanoBase * acrescimosPagamento[formaPagamento];
                     valorFinalMensalCalculado = (valorTotalPlanoBase + acrescimoTotal) / mesesPlano;
