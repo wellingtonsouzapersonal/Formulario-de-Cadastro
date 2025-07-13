@@ -193,22 +193,16 @@
                 <input type="date" id="dataInicio" name="dataInicio" required class="rounded-lg">
             </div>
 
-            <!-- Campo: Contato de emergência -->
+            <!-- Novo Campo: Nome do Contato de Emergência -->
             <div class="form-group">
-                <label for="contatoEmergencia">Contato de emergência:</label>
-                <input type="tel" id="contatoEmergencia" name="contatoEmergencia" placeholder="Ex: (XX) XXXXX-XXXX" required class="rounded-lg">
+                <label for="nomeContatoEmergencia">Nome do Contato de Emergência:</label>
+                <input type="text" id="nomeContatoEmergencia" name="nomeContatoEmergencia" required class="rounded-lg">
             </div>
 
-            <!-- Campo: Quantas vezes por semana (agora com opções de seleção) -->
+            <!-- Campo: Contato de emergência (Telefone) -->
             <div class="form-group">
-                <label for="frequenciaSemana">Quantas vezes por semana:</label>
-                <select id="frequenciaSemana" name="frequenciaSemana" required class="rounded-lg">
-                    <option value="">Selecione uma opção</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
+                <label for="contatoEmergencia">Telefone do Contato de Emergência:</label>
+                <input type="tel" id="contatoEmergencia" name="contatoEmergencia" placeholder="Ex: (XX) XXXXX-XXXX" required class="rounded-lg">
             </div>
 
             <!-- Campo: Plano escolhido - 3 ou 6 meses ou Casal ou Online -->
@@ -240,6 +234,18 @@
                 <div id="planDetailsDisplay" class="plan-details hidden"></div>
             </div>
 
+            <!-- Campo: Quantas vezes por semana (agora com opções de seleção) -->
+            <div class="form-group">
+                <label for="frequenciaSemana">Quantas vezes por semana:</label>
+                <select id="frequenciaSemana" name="frequenciaSemana" required class="rounded-lg">
+                    <option value="">Selecione uma opção</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+
             <!-- Campo: Forma de pagamento (agora com opções de seleção detalhadas) -->
             <div class="form-group">
                 <label for="formaPagamento">Forma de pagamento:</label>
@@ -250,6 +256,7 @@
                     <option value="Crédito (à vista)">Crédito (à vista - 4,98%)</option>
                     <option value="Crédito (parcelado)">Crédito (2x a 12x - 5,31%)</option>
                     <option value="Boleto (acréscimo R$5,00 por boleto)">Boleto (acréscimo R$5,00 por boleto)</option>
+                    <option value="Dinheiro">Dinheiro (0,00%)</option>
                 </select>
             </div>
 
@@ -314,7 +321,8 @@
             'Débito': 0.0199, // 1.99%
             'Crédito (à vista)': 0.0498, // 4.98%
             'Crédito (parcelado)': 0.0531, // 5.31%
-            'Boleto (acréscimo R$5,00 por boleto)': 5.00 // R$5 fixos por boleto/mês
+            'Boleto (acréscimo R$5,00 por boleto)': 5.00, // R$5 fixos por boleto/mês
+            'Dinheiro': 0 // 0.00%
         };
 
         // Detalhes dos planos para exibição
@@ -343,6 +351,7 @@
                     <li>App para treino com exemplos de execução dos exercícios</li>
                     <li>Treinos em PDF</li>
                     <li>Suporte online</li>
+                    <li>Observação: Treinos no mesmo horário</li>
                 </ul>
             `,
             'Casal - 6 meses': `
