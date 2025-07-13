@@ -10,7 +10,12 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5; /* Cor de fundo suave */
+            background-color: #f0f2f5; /* Cor de fundo suave como fallback */
+            background-image: url('http://googleusercontent.com/file_content/1'); /* URL da sua logomarca */
+            background-size: cover; /* Cobre toda a área do corpo */
+            background-position: center; /* Centraliza a imagem */
+            background-repeat: no-repeat; /* Não repete a imagem */
+            background-attachment: fixed; /* Imagem fica fixa ao rolar a página */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -18,6 +23,23 @@
             padding: 20px;
             box-sizing: border-box;
         }
+        /* Overlay para reduzir a opacidade do background sem afetar o conteúdo */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('http://googleusercontent.com/file_content/1'); /* URL da sua logomarca */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            opacity: 0.1; /* Ajuste a opacidade aqui (0.1 para 10%, 0.2 para 20%, etc.) */
+            z-index: -1; /* Garante que o overlay fique atrás do conteúdo */
+        }
+
         .form-container {
             background-color: #ffffff;
             padding: 32px;
@@ -26,6 +48,8 @@
             max-width: 600px;
             width: 100%;
             border: 1px solid #e0e0e0;
+            position: relative; /* Para garantir que fique acima do fundo */
+            z-index: 1; /* Garante que o container esteja acima do background */
         }
         .form-group {
             margin-bottom: 20px;
@@ -108,6 +132,22 @@
             font-size: 1.25rem; /* text-xl */
             border: 1px solid #90cdf4; /* blue-300 */
         }
+        .plan-details {
+            background-color: #f0fdf4; /* green-50 */
+            color: #166534; /* green-800 */
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px solid #a7f3d0; /* green-200 */
+            font-size: 0.9rem;
+        }
+        .plan-details ul {
+            list-style: disc;
+            margin-left: 20px;
+        }
+        .plan-details li {
+            margin-bottom: 4px;
+        }
     </style>
 </head>
 <body>
@@ -188,10 +228,16 @@
                         Casal - 3 meses
                     </label>
                     <label>
+                        <input type="radio" name="plano" value="Casal - 6 meses">
+                        Casal - 6 meses (mesmo horário)
+                    </label>
+                    <label>
                         <input type="radio" name="plano" value="Online Trimestral">
-                        Online Trimestral
+                        Online Trimestral (R$150,00 mensal - total R$450,00)
                     </label>
                 </div>
+                <!-- Div para exibir os detalhes do plano selecionado -->
+                <div id="planDetailsDisplay" class="plan-details hidden"></div>
             </div>
 
             <!-- Campo: Forma de pagamento (agora com opções de seleção detalhadas) -->
@@ -225,6 +271,7 @@
         const planoRadios = document.querySelectorAll('input[name="plano"]');
         const formaPagamentoSelect = document.getElementById('formaPagamento');
         const valorEstimadoDiv = document.getElementById('valorEstimado');
+        const planDetailsDisplay = document.getElementById('planDetailsDisplay'); // Novo elemento para detalhes do plano
 
         // Tabela de preços base (mensal) por frequência para o plano Individual - 3 meses
         const precosBasePorFrequenciaIndividual3Meses = {
@@ -250,8 +297,16 @@
             '5': 1000.00   // 5 X por semana: R$1.000.00 mensal
         };
 
+        // Tabela de preços base (mensal) por frequência para o plano Casal - 6 meses
+        const precosBasePorFrequenciaCasal6Meses = {
+            '2': 500.00,   // 2 X por semana: R$500.00 mensal
+            '3': 610.00,   // 3 X por semana: R$610.00 mensal
+            '4': 780.00,   // 4 X por semana: R$780.00 mensal
+            '5': 980.00    // 5 X por semana: R$980.00 mensal
+        };
+
         // Preço fixo para o Plano Online Trimestral (valor mensal)
-        const precoPlanoOnlineTrimestral = 480.00; // R$480,00 mensal
+        const precoPlanoOnlineTrimestral = 150.00; // R$150,00 mensal (total R$450,00)
 
         // Acréscimos/descontos por forma de pagamento
         const acrescimosPagamento = {
@@ -261,6 +316,56 @@
             'Crédito (parcelado)': 0.0531, // 5.31%
             'Boleto (acréscimo R$5,00 por boleto)': 5.00 // R$5 fixos por boleto/mês
         };
+
+        // Detalhes dos planos para exibição
+        const detalhesDosPlanos = {
+            'Individual - 3 meses': `
+                <ul>
+                    <li>1h de Aula presencial</li>
+                    <li>2 Avaliações físicas</li>
+                    <li>PDF e App para treino com exemplos de execução dos exercícios</li>
+                    <li>Suporte online</li>
+                </ul>
+            `,
+            'Individual - 6 meses': `
+                <ul>
+                    <li>1h de Aula presencial</li>
+                    <li>Avaliação física mensal</li>
+                    <li>App para treino com exemplos de execução dos exercícios</li>
+                    <li>Treinos em PDF</li>
+                    <li>Suporte online</li>
+                </ul>
+            `,
+            'Casal - 3 meses': `
+                <ul>
+                    <li>1h de Aula presencial</li>
+                    <li>Avaliação física mensal</li>
+                    <li>App para treino com exemplos de execução dos exercícios</li>
+                    <li>Treinos em PDF</li>
+                    <li>Suporte online</li>
+                </ul>
+            `,
+            'Casal - 6 meses': `
+                <ul>
+                    <li>1h de Aula presencial</li>
+                    <li>Avaliação física mensal</li>
+                    <li>App para treino com exemplos de execução dos exercícios</li>
+                    <li>Treinos em PDF</li>
+                    <li>Suporte online</li>
+                    <li>Observação: Treinos no mesmo horário</li>
+                </ul>
+            `,
+            'Online Trimestral': `
+                <ul>
+                    <li>1 Treino presencial - mês</li>
+                    <li>2 Avaliações físicas</li>
+                    <li>App para treino com exemplos de execução dos exercícios</li>
+                    <li>Treinos em PDF</li>
+                    <li>Suporte online 7 dias semana</li>
+                </ul>
+            `
+        };
+
 
         // Função para calcular e exibir o valor estimado
         function calcularValorEstimado() {
@@ -275,7 +380,7 @@
             const formaPagamento = formaPagamentoSelect.value;
 
             // Lógica para habilitar/desabilitar e validar a frequência semanal
-            if (planoSelecionado === 'Online Trimestral') {
+            if (planoSelecionado && planoSelecionado.includes('Online')) { // Verifica se é um plano online
                 frequenciaSemanaSelect.value = ''; // Limpa a seleção
                 frequenciaSemanaSelect.disabled = true; // Desabilita o select
                 frequenciaSemanaSelect.removeAttribute('required'); // Remove a obrigatoriedade
@@ -284,14 +389,24 @@
                 frequenciaSemanaSelect.setAttribute('required', 'required'); // Adiciona a obrigatoriedade
             }
 
+            // Exibe os detalhes do plano
+            if (planoSelecionado && detalhesDosPlanos[planoSelecionado]) {
+                planDetailsDisplay.innerHTML = detalhesDosPlanos[planoSelecionado];
+                planDetailsDisplay.classList.remove('hidden');
+            } else {
+                planDetailsDisplay.innerHTML = '';
+                planDetailsDisplay.classList.add('hidden');
+            }
+
+
             // Verifica se todas as opções necessárias foram selecionadas
             // Para planos não online, frequência e plano devem estar selecionados
-            if (planoSelecionado !== 'Online Trimestral' && (!frequencia || !planoSelecionado || !formaPagamento)) {
+            if (planoSelecionado && !planoSelecionado.includes('Online') && (!frequencia || !planoSelecionado || !formaPagamento)) {
                 valorEstimadoDiv.textContent = 'Selecione todas as opções para ver o valor estimado.';
                 return;
             }
             // Para plano online, apenas plano e forma de pagamento são necessários
-            if (planoSelecionado === 'Online Trimestral' && (!planoSelecionado || !formaPagamento)) {
+            if (planoSelecionado && planoSelecionado.includes('Online') && (!planoSelecionado || !formaPagamento)) {
                 valorEstimadoDiv.textContent = 'Selecione o plano e a forma de pagamento para ver o valor estimado.';
                 return;
             }
@@ -306,6 +421,8 @@
                 valorBaseMensal = precosBasePorFrequenciaIndividual6Meses[frequencia];
             } else if (planoSelecionado === 'Casal - 3 meses') {
                 valorBaseMensal = precosBasePorFrequenciaCasal3Meses[frequencia];
+            } else if (planoSelecionado === 'Casal - 6 meses') {
+                valorBaseMensal = precosBasePorFrequenciaCasal6Meses[frequencia];
             } else if (planoSelecionado === 'Online Trimestral') {
                 valorBaseMensal = precoPlanoOnlineTrimestral;
             }
