@@ -97,6 +97,17 @@
             font-weight: 500;
             /* display: none; */ /* Removido para que o Formspree possa redirecionar */
         }
+        .price-display {
+            background-color: #e0f2fe; /* light blue-100 */
+            color: #0c4a6e; /* blue-900 */
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.25rem; /* text-xl */
+            border: 1px solid #90cdf4; /* blue-300 */
+        }
     </style>
 </head>
 <body>
@@ -160,46 +171,174 @@
                 </select>
             </div>
 
-            <!-- Campo: Plano escolhido - 3 ou 6 meses -->
+            <!-- Campo: Plano escolhido - 3 ou 6 meses ou Casal ou Online -->
             <div class="form-group">
                 <label>Plano escolhido:</label>
                 <div class="radio-group flex flex-wrap gap-4 mt-2">
                     <label>
-                        <input type="radio" name="plano" value="3 meses" required>
-                        3 meses
+                        <input type="radio" name="plano" value="Individual - 3 meses" required>
+                        Individual - 3 meses
                     </label>
                     <label>
-                        <input type="radio" name="plano" value="6 meses">
-                        6 meses
+                        <input type="radio" name="plano" value="Individual - 6 meses">
+                        Individual - 6 meses
+                    </label>
+                    <label>
+                        <input type="radio" name="plano" value="Casal - 3 meses">
+                        Casal - 3 meses
+                    </label>
+                    <label>
+                        <input type="radio" name="plano" value="Online Trimestral">
+                        Online Trimestral
                     </label>
                 </div>
             </div>
 
-            <!-- Campo: Forma de pagamento (agora com opções de seleção) -->
+            <!-- Campo: Forma de pagamento (agora com opções de seleção detalhadas) -->
             <div class="form-group">
                 <label for="formaPagamento">Forma de pagamento:</label>
                 <select id="formaPagamento" name="formaPagamento" required class="rounded-lg">
                     <option value="">Selecione uma opção</option>
-                    <option value="Pix">Pix</option>
-                    <option value="Débito">Débito</option>
-                    <option value="Crédito (acréscimo da máquina)">Crédito (acréscimo da máquina)</option>
+                    <option value="Pix">Pix (0,00%)</option>
+                    <option value="Débito">Débito (1,99%)</option>
+                    <option value="Crédito (à vista)">Crédito (à vista - 4,98%)</option>
+                    <option value="Crédito (parcelado)">Crédito (2x a 12x - 5,31%)</option>
                     <option value="Boleto (acréscimo R$5,00 por boleto)">Boleto (acréscimo R$5,00 por boleto)</option>
                 </select>
+            </div>
+
+            <!-- Novo campo para exibir o valor estimado -->
+            <div class="form-group">
+                <div id="valorEstimado" class="price-display">
+                    Selecione as opções para ver o valor estimado.
+                </div>
             </div>
 
             <!-- Botão de Enviar -->
             <button type="submit">Enviar Cadastro</button>
         </form>
-
-        <!-- A mensagem de confirmação local foi removida, pois o Formspree redirecionará para a página de sucesso deles -->
-        <!-- Você pode configurar uma página de sucesso personalizada no Formspree (recurso pago) ou usar a página padrão deles. -->
     </div>
 
     <script>
-        // O script JavaScript local para exibir a mensagem de confirmação foi removido,
-        // pois o Formspree lida com o envio e o feedback ao usuário através de sua própria página de sucesso.
-        // Se você precisar de lógica JavaScript adicional (como validações mais complexas antes do envio),
-        // ela deve ser implementada antes do envio para o Formspree.
+        // Elementos do formulário que influenciam o preço
+        const frequenciaSemanaSelect = document.getElementById('frequenciaSemana');
+        const planoRadios = document.querySelectorAll('input[name="plano"]');
+        const formaPagamentoSelect = document.getElementById('formaPagamento');
+        const valorEstimadoDiv = document.getElementById('valorEstimado');
+
+        // Tabela de preços base (mensal) por frequência para o plano Individual - 3 meses
+        const precosBasePorFrequenciaIndividual3Meses = {
+            '2': 320.00, // 2 X por semana: R$320.00 mensal
+            '3': 380.00, // 3 X por semana: R$380.00 mensal
+            '4': 480.00, // 4 X por semana: R$480.00 mensal
+            '5': 580.00  // 5 X por semana: R$580.00 mensal
+        };
+
+        // Tabela de preços base (mensal) por frequência para o plano Individual - 6 meses
+        const precosBasePorFrequenciaIndividual6Meses = {
+            '2': 300.00, // 2 X por semana: R$300.00 mensal
+            '3': 360.00, // 3 X por semana: R$360.00 mensal
+            '4': 460.00, // 4 X por semana: R$460.00 mensal
+            '5': 560.00  // 5 X por semana: R$560.00 mensal
+        };
+
+        // Tabela de preços base (mensal) por frequência para o plano Casal - 3 meses
+        const precosBasePorFrequenciaCasal3Meses = {
+            '2': 520.00,   // 2 X por semana: R$520.00 mensal
+            '3': 630.00,   // 3 X por semana: R$630.00 mensal
+            '4': 800.00,   // 4 X por semana: R$800.00 mensal
+            '5': 1000.00   // 5 X por semana: R$1.000.00 mensal
+        };
+
+        // Preço fixo para o Plano Online Trimestral (valor mensal)
+        const precoPlanoOnlineTrimestral = 480.00; // R$480,00 mensal
+
+        // Acréscimos/descontos por forma de pagamento
+        const acrescimosPagamento = {
+            'Pix': 0, // 0.00%
+            'Débito': 0.0199, // 1.99%
+            'Crédito (à vista)': 0.0498, // 4.98%
+            'Crédito (parcelado)': 0.0531, // 5.31%
+            'Boleto (acréscimo R$5,00 por boleto)': 5.00 // R$5 fixos por boleto/mês
+        };
+
+        // Função para calcular e exibir o valor estimado
+        function calcularValorEstimado() {
+            const frequencia = frequenciaSemanaSelect.value;
+            let planoSelecionado = null;
+            for (const radio of planoRadios) {
+                if (radio.checked) {
+                    planoSelecionado = radio.value;
+                    break;
+                }
+            }
+            const formaPagamento = formaPagamentoSelect.value;
+
+            // Lógica para habilitar/desabilitar e validar a frequência semanal
+            if (planoSelecionado === 'Online Trimestral') {
+                frequenciaSemanaSelect.value = ''; // Limpa a seleção
+                frequenciaSemanaSelect.disabled = true; // Desabilita o select
+                frequenciaSemanaSelect.removeAttribute('required'); // Remove a obrigatoriedade
+            } else {
+                frequenciaSemanaSelect.disabled = false; // Habilita o select
+                frequenciaSemanaSelect.setAttribute('required', 'required'); // Adiciona a obrigatoriedade
+            }
+
+            // Verifica se todas as opções necessárias foram selecionadas
+            // Para planos não online, frequência e plano devem estar selecionados
+            if (planoSelecionado !== 'Online Trimestral' && (!frequencia || !planoSelecionado || !formaPagamento)) {
+                valorEstimadoDiv.textContent = 'Selecione todas as opções para ver o valor estimado.';
+                return;
+            }
+            // Para plano online, apenas plano e forma de pagamento são necessários
+            if (planoSelecionado === 'Online Trimestral' && (!planoSelecionado || !formaPagamento)) {
+                valorEstimadoDiv.textContent = 'Selecione o plano e a forma de pagamento para ver o valor estimado.';
+                return;
+            }
+
+
+            let valorBaseMensal;
+
+            // Seleciona a tabela de preços com base no plano escolhido
+            if (planoSelecionado === 'Individual - 3 meses') {
+                valorBaseMensal = precosBasePorFrequenciaIndividual3Meses[frequencia];
+            } else if (planoSelecionado === 'Individual - 6 meses') {
+                valorBaseMensal = precosBasePorFrequenciaIndividual6Meses[frequencia];
+            } else if (planoSelecionado === 'Casal - 3 meses') {
+                valorBaseMensal = precosBasePorFrequenciaCasal3Meses[frequencia];
+            } else if (planoSelecionado === 'Online Trimestral') {
+                valorBaseMensal = precoPlanoOnlineTrimestral;
+            }
+            else {
+                valorEstimadoDiv.textContent = 'Plano selecionado inválido.';
+                return;
+            }
+
+            let valorFinalMensal = valorBaseMensal;
+
+            // Aplica acréscimo da forma de pagamento
+            if (acrescimosPagamento[formaPagamento] !== undefined) {
+                // Verifica se o acréscimo é uma porcentagem (menor que 1) ou um valor fixo
+                if (acrescimosPagamento[formaPagamento] < 1 && acrescimosPagamento[formaPagamento] > 0) {
+                    valorFinalMensal += (valorBaseMensal * acrescimosPagamento[formaPagamento]);
+                } else { // Valor fixo (como o boleto) ou 0%
+                    valorFinalMensal += acrescimosPagamento[formaPagamento];
+                }
+            }
+
+            // Exibe o valor formatado
+            valorEstimadoDiv.textContent = `Valor Mensal Estimado: R$ ${valorFinalMensal.toFixed(2).replace('.', ',')}`;
+        }
+
+        // Adiciona listeners para recalcular o valor quando as opções mudam
+        frequenciaSemanaSelect.addEventListener('change', calcularValorEstimado);
+        formaPagamentoSelect.addEventListener('change', calcularValorEstimado);
+        planoRadios.forEach(radio => {
+            radio.addEventListener('change', calcularValorEstimado);
+        });
+
+        // Chama a função uma vez ao carregar a página para exibir o estado inicial
+        document.addEventListener('DOMContentLoaded', calcularValorEstimado);
     </script>
 </body>
 </html>
