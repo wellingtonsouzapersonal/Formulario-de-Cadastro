@@ -167,10 +167,10 @@
                 <input type="email" id="email" name="email" required class="rounded-lg">
             </div>
 
-            <!-- Campo: Contato de emergência (Nome e Telefone Combinados) -->
+            <!-- Novo Campo: Instagram -->
             <div class="form-group">
-                <label for="contatoEmergencia">Nome e Telefone do Contato de Emergência:</label>
-                <input type="text" id="contatoEmergencia" name="contatoEmergencia" placeholder="Ex: Nome do Contato (XX) XXXXX-XXXX" required class="rounded-lg">
+                <label for="instagram">Instagram:</label>
+                <input type="text" id="instagram" name="instagram" placeholder="@seu_instagram" class="rounded-lg">
             </div>
 
             <!-- Campo: Data de início -->
@@ -200,8 +200,8 @@
                         Casal - 6 meses
                     </label>
                     <label>
-                        <input type="radio" name="plano" value="Online Trimestral">
-                        Online Trimestral (R$150,00 mensal - total R$450,00)
+                        <input type="radio" name="plano" value="Online - 3 meses"> <!-- Alterado aqui -->
+                        Online - 3 meses <!-- Alterado aqui e removido o valor -->
                     </label>
                 </div>
                 <!-- Div para exibir os detalhes do plano selecionado -->
@@ -305,7 +305,7 @@
             'Individual - 6 meses': 6,
             'Casal - 3 meses': 3,
             'Casal - 6 meses': 6,
-            'Online Trimestral': 3
+            'Online - 3 meses': 3 // Alterado aqui
         };
 
         // Detalhes dos planos para exibição
@@ -347,7 +347,7 @@
                     <li>Observação: Treinos no mesmo horário</li>
                 </ul>
             `,
-            'Online Trimestral': `
+            'Online - 3 meses': ` <!-- Alterado aqui -->
                 <ul>
                     <li>1 Treino presencial - mês</li>
                     <li>2 Avaliações físicas</li>
@@ -357,6 +357,32 @@
                 </ul>
             `
         };
+
+        // Função para resetar o formulário
+        function resetForm() {
+            // Desmarcar todos os radio buttons
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+
+            // Resetar todos os select elements para a primeira opção (vazia)
+            document.querySelectorAll('select').forEach(select => {
+                select.selectedIndex = 0;
+                select.disabled = false; // Garante que o select de frequência seja reativado
+            });
+
+            // Limpar todos os campos de texto
+            document.querySelectorAll('input[type="text"], input[type="email"], input[type="date"], input[type="tel"]').forEach(input => {
+                input.value = '';
+            });
+
+            // Ocultar os detalhes do plano
+            planDetailsDisplay.innerHTML = '';
+            planDetailsDisplay.classList.add('hidden');
+
+            // Resetar a exibição do valor estimado
+            valorEstimadoDiv.textContent = 'Selecione as opções para ver o valor estimado.';
+        }
 
 
         // Função para calcular e exibir o valor estimado
@@ -390,16 +416,9 @@
                 planDetailsDisplay.classList.add('hidden');
             }
 
-
-            // Verifica se todas as opções necessárias foram selecionadas
-            // Para planos não online, frequência e plano devem estar selecionados
-            if (planoSelecionado && !planoSelecionado.includes('Online') && (!frequencia || !planoSelecionado || !formaPagamento)) {
-                valorEstimadoDiv.textContent = 'Selecione todas as opções para ver o valor estimado.';
-                return;
-            }
-            // Para plano online, apenas plano e forma de pagamento são necessários
-            if (planoSelecionado && planoSelecionado.includes('Online') && (!planoSelecionado || !formaPagamento)) {
-                valorEstimadoDiv.textContent = 'Selecione o plano e a forma de pagamento para ver o valor estimado.';
+            // Apenas exibe o valor estimado se o plano e a forma de pagamento (e frequência, se aplicável) forem selecionados
+            if (!planoSelecionado || !formaPagamento || (!planoSelecionado.includes('Online') && !frequencia)) {
+                valorEstimadoDiv.textContent = 'Selecione as opções para ver o valor estimado.';
                 return;
             }
 
@@ -418,7 +437,7 @@
                 valorBaseMensal = precosBasePorFrequenciaCasal3Meses[frequencia];
             } else if (planoSelecionado === 'Casal - 6 meses') {
                 valorBaseMensal = precosBasePorFrequenciaCasal6Meses[frequencia];
-            } else if (planoSelecionado === 'Online Trimestral') {
+            } else if (planoSelecionado === 'Online - 3 meses') { // Alterado aqui
                 valorBaseMensal = precoPlanoOnlineTrimestral;
             }
             else {
@@ -457,8 +476,11 @@
             radio.addEventListener('change', calcularValorEstimado);
         });
 
-        // Chama a função uma vez ao carregar a página para exibir o estado inicial
-        document.addEventListener('DOMContentLoaded', calcularValorEstimado);
+        // Chama a função resetForm e calcularValorEstimado uma vez ao carregar a página para exibir o estado inicial limpo
+        document.addEventListener('DOMContentLoaded', function() {
+            resetForm(); // Limpa o formulário
+            calcularValorEstimado(); // Recalcula o valor estimado para o estado inicial (vazio)
+        });
     </script>
 </body>
 </html>
