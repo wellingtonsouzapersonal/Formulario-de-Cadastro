@@ -201,24 +201,24 @@
                 <label>Escolha o seu Plano:</label>
                 <div class="radio-group flex flex-wrap gap-4 mt-2">
                     <label>
-                        <input type="radio" name="Plano Escolhido" value="Individual - 3 meses" required>
-                        Individual - 3 meses
+                        <input type="radio" name="Plano Escolhido" value="Trimestral Individual" required> <!-- Alterado aqui -->
+                        Trimestral Individual <!-- Alterado aqui -->
                     </label>
                     <label>
-                        <input type="radio" name="Plano Escolhido" value="Individual - 6 meses">
-                        Individual - 6 meses
+                        <input type="radio" name="Plano Escolhido" value="Semestral Individual"> <!-- Alterado aqui -->
+                        Semestral Individual <!-- Alterado aqui -->
                     </label>
                     <label>
-                        <input type="radio" name="Plano Escolhido" value="Casal - 3 meses">
-                        Casal - 3 meses
+                        <input type="radio" name="Plano Escolhido" value="Trimestral Casal"> <!-- Alterado aqui -->
+                        Trimestral Casal <!-- Alterado aqui -->
                     </label>
                     <label>
-                        <input type="radio" name="Plano Escolhido" value="Casal - 6 meses">
-                        Casal - 6 meses
+                        <input type="radio" name="Plano Escolhido" value="Semestral Casal"> <!-- Alterado aqui -->
+                        Semestral Casal <!-- Alterado aqui -->
                     </label>
                     <label>
-                        <input type="radio" name="Plano Escolhido" value="Online - 3 meses">
-                        Online - 3 meses
+                        <input type="radio" name="Plano Escolhido" value="Online">
+                        Online
                     </label>
                 </div>
                 <!-- Div para exibir os detalhes do plano selecionado -->
@@ -311,8 +311,8 @@
             '5': 980.00    // 5 X por semana: R$980.00 mensal
         };
 
-        // Preço fixo para o Plano Online - 3 meses (valor mensal)
-        const precoPlanoOnline3Meses = 160.00; // R$160,00 mensal (total R$480,00)
+        // Preço fixo para o Plano Online
+        const precoPlanoOnline = 160.00; // R$160,00 mensal (total R$480,00 para 3 meses)
 
         // Acréscimos/descontos por forma de pagamento
         const acrescimosPagamento = {
@@ -326,16 +326,16 @@
 
         // Duração dos planos em meses
         const planDurations = {
-            'Individual - 3 meses': 3,
-            'Individual - 6 meses': 6,
-            'Casal - 3 meses': 3,
-            'Casal - 6 meses': 6,
-            'Online - 3 meses': 3
+            'Trimestral Individual': 3, // Alterado aqui
+            'Semestral Individual': 6, // Alterado aqui
+            'Trimestral Casal': 3, // Alterado aqui
+            'Semestral Casal': 6, // Alterado aqui
+            'Online': 3
         };
 
         // Detalhes dos planos para exibição
         const detalhesDosPlanos = {
-            'Individual - 3 meses': `
+            'Trimestral Individual': ` <!-- Alterado aqui -->
                 <ul>
                     <li>1h de Aula presencial</li>
                     <li>2 Avaliações físicas</li>
@@ -343,7 +343,7 @@
                     <li>Suporte online</li>
                 </ul>
             `,
-            'Individual - 6 meses': `
+            'Semestral Individual': ` <!-- Alterado aqui -->
                 <ul>
                     <li>1h de Aula presencial</li>
                     <li>Avaliação física mensal</li>
@@ -352,17 +352,7 @@
                     <li>Suporte online</li>
                 </ul>
             `,
-            'Casal - 3 meses': `
-                <ul>
-                    <li>1h de Aula presencial</li>
-                    <li>Avaliação física mensal</li>
-                    <li>App para treino com exemplos de execução dos exercícios</li>
-                    <li>Treinos em PDF</li>
-                    <li>Suporte online</li>
-                    <li>Observação: Treinos no mesmo horário</li>
-                </ul>
-            `,
-            'Casal - 6 meses': `
+            'Trimestral Casal': ` <!-- Alterado aqui -->
                 <ul>
                     <li>1h de Aula presencial</li>
                     <li>Avaliação física mensal</li>
@@ -372,7 +362,17 @@
                     <li>Observação: Treinos no mesmo horário</li>
                 </ul>
             `,
-            'Online - 3 meses': `
+            'Semestral Casal': ` <!-- Alterado aqui -->
+                <ul>
+                    <li>1h de Aula presencial</li>
+                    <li>Avaliação física mensal</li>
+                    <li>App para treino com exemplos de execução dos exercícios</li>
+                    <li>Treinos em PDF</li>
+                    <li>Suporte online</li>
+                    <li>Observação: Treinos no mesmo horário</li>
+                </ul>
+            `,
+            'Online': `
                 <ul>
                     <li>1 Treino presencial - mês</li>
                     <li>2 Avaliações físicas</li>
@@ -479,16 +479,16 @@
 
 
             // Seleciona a tabela de preços com base no plano escolhido
-            if (planoSelecionado === 'Individual - 3 meses') {
+            if (planoSelecionado === 'Trimestral Individual') { // Alterado aqui
                 valorBaseMensal = precosBasePorFrequenciaIndividual3Meses[frequencia];
-            } else if (planoSelecionado === 'Individual - 6 meses') {
+            } else if (planoSelecionado === 'Semestral Individual') { // Alterado aqui
                 valorBaseMensal = precosBasePorFrequenciaIndividual6Meses[frequencia];
-            } else if (planoSelecionado === 'Casal - 3 meses') {
+            } else if (planoSelecionado === 'Trimestral Casal') { // Alterado aqui
                 valorBaseMensal = precosBasePorFrequenciaCasal3Meses[frequencia];
-            } else if (planoSelecionado === 'Casal - 6 meses') {
+            } else if (planoSelecionado === 'Semestral Casal') { // Alterado aqui
                 valorBaseMensal = precosBasePorFrequenciaCasal6Meses[frequencia];
-            } else if (planoSelecionado === 'Online - 3 meses') {
-                valorBaseMensal = precoPlanoOnline3Meses;
+            } else if (planoSelecionado === 'Online') {
+                valorBaseMensal = precoPlanoOnline;
             }
             else {
                 valorEstimadoDiv.textContent = 'Plano selecionado inválido.';
