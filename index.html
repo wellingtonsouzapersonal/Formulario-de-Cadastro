@@ -371,7 +371,6 @@
                         <option value="Pix">Pix (0,00%)</option>
                         <option value="Debito">Débito (1,99%)</option>
                         <option value="CreditoAVista">Crédito (à vista - 4,98%)</option>
-                        <option value="CreditoParcelado">Crédito (parcelado até 6x - 6% por parcela)</option>
                         <option value="Boleto">Boleto (acréscimo R$5,00 por boleto)</option>
                     </select>
                 </div>
@@ -734,7 +733,6 @@
             "Pix": 0.0,
             "Debito": 0.0199,
             "CreditoAVista": 0.0498,
-            "CreditoParcelado": 0.06,
             "Boleto": 5.00
         };
 
@@ -782,22 +780,6 @@
             detailsHtml += `</ul>`;
             planDetailsDisplay.innerHTML = detailsHtml;
             planDetailsDisplay.classList.remove('hidden-group');
-        }
-
-        function togglePaymentOptions() {
-            const selectedPlano = document.querySelector('input[name="Plano Escolhido"]:checked');
-            if (selectedPlano && selectedPlano.value === "Online") {
-                if (creditoParceladoOption) {
-                    creditoParceladoOption.style.display = 'none';
-                    if (formaPagamentoSelect.value === 'CreditoParcelado') {
-                        formaPagamentoSelect.value = '';
-                    }
-                }
-            } else {
-                if (creditoParceladoOption) {
-                    creditoParceladoOption.style.display = '';
-                }
-            }
         }
 
         function updatePlanDisplay() {
@@ -848,16 +830,6 @@
                         <p class="mb-1"><strong>Valor Mensal Estimado:</strong> R$ ${finalMonthlyPrice.toFixed(2).replace('.', ',')}</p>
                         <p><strong>Valor Total do Plano:</strong> R$ ${finalPrice.toFixed(2).replace('.', ',')}</p>
                     `;
-                    break;
-                case 'CreditoParcelado':
-                    const totalWithInterest = totalPlanPriceWithoutInterest * (1 + TAX_RATES["CreditoParcelado"]);
-                    finalPriceText = `<p class="mb-2"><strong>Valor Total do Plano (sem juros):</strong> R$ ${totalPlanPriceWithoutInterest.toFixed(2).replace('.', ',')}</p>`;
-                    finalPriceText += `<p class="font-bold mb-1">Valores por Parcela:</p><ul>`;
-                    for (let i = 1; i <= 6; i++) {
-                        const valorParcela = totalWithInterest / i;
-                        finalPriceText += `<li><strong>${i}x</strong> de R$ ${valorParcela.toFixed(2).replace('.', ',')}</li>`;
-                    }
-                    finalPriceText += `</ul>`;
                     break;
                 case 'Boleto':
                     const finalPriceBoleto = totalPlanPriceWithoutInterest + (planoDetalhes.duration * TAX_RATES["Boleto"]);
@@ -1147,7 +1119,6 @@
         planoRadios.forEach(radio => radio.addEventListener('change', () => {
             updatePlanDetails(radio.value);
             togglePlanElements();
-            togglePaymentOptions();
         }));
 
         frequenciaSelect.addEventListener('change', updatePlanDisplay);
