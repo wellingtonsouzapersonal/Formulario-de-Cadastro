@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Cadastro</title>
+    <title>Formulário de Cadastro e Anamnese</title>
     <!-- Inclui o Tailwind CSS para estilização rápida e responsiva -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -113,12 +113,12 @@
             border: 1px solid #90cdf4;
         }
         .plan-details {
-            background-color: #f0fdf4;
-            color: #166534;
+            background-color: #e0f2fe;
+            color: #0c4a6e;
             padding: 12px;
             border-radius: 8px;
             margin-top: 10px;
-            border: 1px solid #a7f3d0;
+            border: 1px solid #90cdf4;
             font-size: 0.9rem;
         }
         .plan-details ul {
@@ -133,11 +133,6 @@
             margin: 0 auto 20px auto;
             max-width: 150px;
             height: auto;
-        }
-        .age-display {
-            margin-left: 10px;
-            font-weight: 500;
-            color: #555;
         }
         .section-title {
             font-size: 1.5rem;
@@ -194,37 +189,54 @@
         .review-data strong {
             color: #2d3748;
         }
-        /* Estilo para a mensagem de erro de validação */
-        .error-message {
-            color: #ef4444; /* red-500 */
-            font-size: 0.875rem; /* text-sm */
-            margin-top: -10px;
-            margin-bottom: 10px;
-            font-weight: 500;
+        .review-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        .review-box .section-title {
+            margin-top: 0;
+            padding-top: 0;
+            border-bottom: none;
+        }
+        .review-box hr {
+            display: none;
         }
     </style>
 </head>
 <body>
     <div class="form-container">
-        <img src="https://raw.githubusercontent.com/wellingtonsouzapersonal/Formul-rio-de-Anaminese/main/WS%20LOGO%20MARCADA%CC%81GUA.png" alt="Logomarca" class="logo" onerror="this.onerror=null; this.src='https://placehold.co/150x50/cccccc/333333?text=Logo+Não+Encontrada';">
+        <!-- Logo -->
+        <div class="flex justify-center mb-6">
+            <img src="https://raw.githubusercontent.com/wellingtonsouzapersonal/Formul-rio-de-Anaminese/main/WS%20LOGO%20MARCADA%CC%81GUA.png" alt="Logomarca Wellington Souza" class="logo" onerror="this.onerror=null; this.src='https://placehold.co/150x50/cccccc/333333?text=Logo+Não+Encontrada';">
+        </div>
         <form id="multiStepForm" action="https://formspree.io/f/meozeakg" method="POST" class="space-y-6">
-
+            
             <!-- Etapa 1: Formulário de Cadastro -->
             <div id="step1">
                 <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Formulário de Cadastro</h2>
                 <div class="section-title">Informações Pessoais</div>
+                <hr class="mb-6">
 
                 <div class="form-group">
                     <label for="nomeCompleto">Nome completo:</label>
                     <input type="text" id="nomeCompleto" name="Nome Completo" required class="rounded-lg">
                 </div>
 
-                <div class="form-group">
-                    <label for="dataNascimento">Data de Nascimento:</label>
-                    <div class="flex items-center">
-                        <input type="date" id="dataNascimento" name="Data de Nascimento" required class="rounded-lg flex-grow">
-                        <span id="idadeDisplay" class="age-display"></span>
-                        <input type="hidden" id="idadeHidden" name="Idade">
+                <div class="form-group flex flex-col sm:flex-row sm:space-x-4">
+                    <div class="w-full sm:w-1/3 mb-4 sm:mb-0">
+                        <label for="cpf">CPF:</label>
+                        <input type="text" id="cpf" name="CPF" required class="rounded-lg">
+                    </div>
+                    <div class="w-full sm:w-1/3 mb-4 sm:mb-0">
+                        <label for="dataNascimento">Data de Nascimento:</label>
+                        <input type="date" id="dataNascimento" name="Data de Nascimento" required class="rounded-lg">
+                    </div>
+                    <div class="w-full sm:w-1/3">
+                        <label for="idade">Idade:</label>
+                        <input type="text" id="idade" name="Idade" readonly class="rounded-lg bg-gray-100 cursor-not-allowed">
                     </div>
                 </div>
 
@@ -245,6 +257,7 @@
                         <div class="radio-group flex mt-2">
                             <label><input type="radio" name="Genero" value="Feminino" required> Feminino</label>
                             <label><input type="radio" name="Genero" value="Masculino"> Masculino</label>
+                            <label><input type="radio" name="Genero" value="Prefiro não identificar"> Prefiro não identificar</label>
                         </div>
                     </div>
                     <div class="w-full sm:w-1/2">
@@ -253,79 +266,95 @@
                     </div>
                 </div>
 
+                <div class="form-group flex flex-col sm:flex-row sm:space-x-4">
+                    <div class="w-full sm:w-1/2 mb-4 sm:mb-0">
+                        <label for="telefoneContato">Telefone de contato:</label>
+                        <input type="tel" id="telefoneContato" name="Telefone de Contato" placeholder="(XX) XXXXX-XXXX" required class="rounded-lg">
+                    </div>
+                    <div class="w-full sm:w-1/2">
+                        <label for="contatoEmergencia">Contato de Emergência:</label>
+                        <input type="text" id="contatoEmergencia" name="Contato de Emergência" placeholder="Ex: Nome do Contato (XX) XXXXX-XXXX" required class="rounded-lg">
+                    </div>
+                </div>
+                
                 <div class="form-group">
-                    <label for="telefoneContato">Telefone de contato:</label>
-                    <input type="tel" id="telefoneContato" name="Telefone de Contato" placeholder="(XX) XXXXX-XXXX" required class="rounded-lg">
+                    <label>Endereço:</label>
+                    <div class="flex flex-col sm:flex-row sm:space-x-4">
+                        <div class="w-full sm:w-1/2 mb-4 sm:mb-0">
+                            <label for="cep">CEP:</label>
+                            <input type="text" id="cep" name="CEP" class="rounded-lg">
+                        </div>
+                        <div class="w-full sm:w-1/2 mb-4 sm:mb-0">
+                            <label for="rua">Rua:</label>
+                            <input type="text" id="rua" name="Rua" required class="rounded-lg">
+                        </div>
+                        <div class="w-full sm:w-1/2">
+                            <label for="numeroCasa">Número:</label>
+                            <input type="text" id="numeroCasa" name="Número da Casa" required class="rounded-lg">
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row sm:space-x-4 mt-4">
+                        <div class="w-full sm:w-1/2 mb-4 sm:mb-0">
+                            <label for="bairro">Bairro:</label>
+                            <input type="text" id="bairro" name="Bairro" required class="rounded-lg">
+                        </div>
+                        <div class="w-full sm:w-1/2">
+                            <label for="cidade">Cidade:</label>
+                            <input type="text" id="cidade" name="Cidade" required class="rounded-lg">
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="contatoEmergencia">Nome e Telefone do Contato de Emergência:</label>
-                    <input type="text" id="contatoEmergencia" name="Contato de Emergência" placeholder="Ex: Nome do Contato (XX) XXXXX-XXXX" required class="rounded-lg">
+                <div class="form-group flex flex-col sm:flex-row sm:space-x-4">
+                    <div class="w-full sm:w-1/2 mb-4 sm:mb-0">
+                        <label for="email">E-mail:</label>
+                        <input type="email" id="email" name="E-mail" required class="rounded-lg">
+                    </div>
+                    <div class="w-full sm:w-1/2">
+                        <label for="instagram">Instagram:</label>
+                        <input type="text" id="instagram" name="Instagram" placeholder="@seu_instagram" class="rounded-lg">
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="cpf">CPF:</label>
-                    <input type="text" id="cpf" name="CPF" required class="rounded-lg">
+                <div class="w-full p-4 rounded-lg bg-blue-100 font-semibold text-center mt-6 border border-blue-300" style="color: #0c4a6e;">
+                    PREENCHA AS INFORMAÇÕES DO PLANO DESEJADO E TENHA OS VALORES ESTIMADOS!
                 </div>
 
-                <div class="form-group">
-                    <label for="endereco">Endereço:</label>
-                    <input type="text" id="endereco" name="Endereço" required class="rounded-lg">
+                <div class="form-group flex flex-col sm:flex-row sm:space-x-4">
+                    <div class="w-full sm:w-1/2 mb-4 sm:mb-0">
+                        <label for="dataInicio">Data de início:</label>
+                        <input type="date" id="dataInicio" name="Data de Início" required class="rounded-lg">
+                    </div>
+                    <div class="w-full sm:w-1/2">
+                        <label>Deseja incluir planejamento alimentar?</label>
+                        <div class="radio-group flex mt-2">
+                            <label><input type="radio" name="Planejamento Alimentar" value="Sim" required> Sim</label>
+                            <label><input type="radio" name="Planejamento Alimentar" value="Não"> Não</label>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="email">E-mail:</label>
-                    <input type="email" id="email" name="E-mail" required class="rounded-lg">
-                </div>
-
-                <div class="form-group">
-                    <label for="instagram">Instagram:</label>
-                    <input type="text" id="instagram" name="Instagram" placeholder="@seu_instagram" required class="rounded-lg">
-                </div>
-
-                <div class="form-group">
-                    <label for="dataInicio">Data de início:</label>
-                    <input type="date" id="dataInicio" name="Data de Início" required class="rounded-lg">
+                
+                <div id="planWarningMessage" class="hidden p-4 rounded-lg text-yellow-700 bg-yellow-100 border border-yellow-200">
+                    Para prosseguirmos aos valores dos planos, por favor, preencha a **Data de início** e selecione se deseja ou não o **Planejamento alimentar**.
                 </div>
 
                 <div class="form-group">
                     <label>Escolha o seu Plano:</label>
                     <div class="radio-group flex flex-wrap gap-4 mt-2">
-                        <label>
-                            <input type="radio" name="Plano Escolhido" value="Trimestral Individual" required onchange="calculatePrice()">
-                            Trimestral Individual
-                        </label>
-                        <label>
-                            <input type="radio" name="Plano Escolhido" value="Semestral Individual" onchange="calculatePrice()">
-                            Semestral Individual
-                        </label>
-                        <label>
-                            <input type="radio" name="Plano Escolhido" value="Trimestral Casal" onchange="calculatePrice()">
-                            Trimestral Casal
-                        </label>
-                        <label>
-                            <input type="radio" name="Plano Escolhido" value="Semestral Casal" onchange="calculatePrice()">
-                            Semestral Casal
-                        </label>
-                        <label>
-                            <input type="radio" name="Plano Escolhido" value="Online" onchange="calculatePrice()">
-                            Online
-                        </label>
+                        <label><input type="radio" name="Plano Escolhido" value="Trimestral Individual" required> Trimestral Individual</label>
+                        <label><input type="radio" name="Plano Escolhido" value="Trimestral Compartilhado"> Trimestral Compartilhado</label>
+                        <label><input type="radio" name="Plano Escolhido" value="Semestral Individual"> Semestral Individual</label>
+                        <label><input type="radio" name="Plano Escolhido" value="Semestral Compartilhado"> Semestral Compartilhado</label>
+                        <label><input type="radio" name="Plano Escolhido" value="Trimestral Casal"> Trimestral Casal</label>
+                        <label><input type="radio" name="Plano Escolhido" value="Semestral Casal"> Semestral Casal</label>
+                        <label><input type="radio" name="Plano Escolhido" value="Online"> Online</label>
                     </div>
                     <div id="planDetailsDisplay" class="plan-details hidden-group"></div>
                 </div>
 
-                <div class="form-group">
-                    <label>Deseja incluir planejamento alimentar?</label>
-                    <div class="radio-group flex mt-2">
-                        <label><input type="radio" name="Planejamento Alimentar" value="Sim" required onchange="calculatePrice()"> Sim</label>
-                        <label><input type="radio" name="Planejamento Alimentar" value="Não" onchange="calculatePrice()"> Não</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
+                <div class="form-group" id="frequenciaContainer">
                     <label for="frequenciaSemana">Quantas vezes por semana:</label>
-                    <select id="frequenciaSemana" name="Frequência Semanal" required class="rounded-lg" onchange="calculatePrice()">
+                    <select id="frequenciaSemana" name="Frequência Semanal" required class="rounded-lg">
                         <option value="">Selecione uma opção</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -336,109 +365,94 @@
 
                 <div class="form-group">
                     <label for="formaPagamento">Forma de pagamento:</label>
-                    <select id="formaPagamento" name="Forma de Pagamento" required class="rounded-lg" onchange="calculatePrice()">
+                    <select id="formaPagamento" name="Forma de Pagamento" required class="rounded-lg">
                         <option value="">Selecione uma opção</option>
                         <option value="Dinheiro">Dinheiro (0,00%)</option>
                         <option value="Pix">Pix (0,00%)</option>
-                        <option value="Débito">Débito (1,99%)</option>
-                        <option value="Crédito (à vista)">Crédito (à vista - 4,98%)</option>
-                        <option value="Crédito (parcelado até 6x)">Crédito (parcelado até 6x - 6% por parcela)</option>
+                        <option value="Debito">Débito (1,99%)</option>
+                        <option value="CreditoAVista">Crédito (à vista - 4,98%)</option>
+                        <option value="CreditoParcelado">Crédito (parcelado até 6x - 6% por parcela)</option>
                         <option value="Boleto">Boleto (acréscimo R$5,00 por boleto)</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <div id="valorEstimado" class="price-display">
-                        Selecione as opções para ver o valor estimado.
-                    </div>
-                    <input type="hidden" id="valorEstimadoHidden" name="Valor Estimado Mensal">
+                    <div id="valorEstimado" class="price-display hidden-group"></div>
+                    <input type="hidden" id="valorEstimadoHidden" name="Valor Estimado">
                 </div>
 
                 <p class="motivational-phrase">Mudar não é fácil, mas quando você nota os resultados, nada te faz parar.</p>
 
-                <button type="button" onclick="nextStep(1)" class="button-highlight">Próximo</button>
+                <button id="nextButton1" type="button" class="button-highlight">Próximo</button>
             </div>
-
-            <!-- Etapa 2: Formulário de Anaminese -->
+            
+            <!-- Etapa 2: Formulário de Anamnese -->
             <div id="step2" class="hidden-group">
-                <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Formulário de Anaminese</h2>
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Formulário de Anamnese</h2>
 
+                <!-- Seção: Histórico de Aptidão Física -->
                 <div class="section-title">Histórico de Aptidão Física</div>
-
+                <hr class="mb-6">
                 <div class="form-group">
                     <label>Teve alguma cirurgia nos últimos 12 meses?</label>
                     <div class="radio-group flex mt-2">
-                        <label><input type="radio" name="Cirurgia Últimos 12 Meses (Anaminese)" value="Sim" required onchange="toggleDetails('cirurgia', this)"> Sim</label>
-                        <label><input type="radio" name="Cirurgia Últimos 12 Meses (Anaminese)" value="Não" onchange="toggleDetails('cirurgia', this)"> Não</label>
+                        <label><input type="radio" name="cirurgia" value="Sim" required> Sim</label>
+                        <label><input type="radio" name="cirurgia" value="Não"> Não</label>
                     </div>
-                    <div id="cirurgiaDetalhes" class="hidden-group">
-                        <label for="qualCirurgiaData" class="mt-2">Cirurgia(s) e data:</label>
-                        <textarea id="qualCirurgiaData" name="Qual Cirurgia e Data (Anaminese)" rows="2" class="rounded-lg"></textarea>
-                    </div>
+                    <textarea id="cirurgia-obs" name="Cirurgia Observação" class="mt-4 hidden-group rounded-lg" placeholder="Qual cirurgia e quando?"></textarea>
                 </div>
 
                 <div class="form-group">
                     <label>Possui problemas de coluna (hérnia, escoliose, etc.)?</label>
                     <div class="radio-group flex mt-2">
-                        <label><input type="radio" name="Problemas Coluna (Anaminese)" value="Sim" required onchange="toggleDetails('coluna', this)"> Sim</label>
-                        <label><input type="radio" name="Problemas Coluna (Anaminese)" value="Não" onchange="toggleDetails('coluna', this)"> Não</label>
+                        <label><input type="radio" name="coluna" value="Sim" required> Sim</label>
+                        <label><input type="radio" name="coluna" value="Não"> Não</label>
                     </div>
-                    <div id="colunaDetalhes" class="hidden-group">
-                        <label for="qualProblemaColuna" class="mt-2">Problema(s) e localização:</label>
-                        <textarea id="qualProblemaColuna" name="Qual Problema Coluna (Anaminese)" rows="2" class="rounded-lg"></textarea>
-                    </div>
+                    <textarea id="coluna-obs" name="Coluna Observação" class="mt-4 hidden-group rounded-lg" placeholder="Qual problema e qual o nível de dor?"></textarea>
                 </div>
 
                 <div class="form-group">
                     <label>Possui problemas nas articulações (joelhos, ombros, tornozelos, etc.)?</label>
                     <div class="radio-group flex mt-2">
-                        <label><input type="radio" name="Problemas Articulações (Anaminese)" value="Sim" required onchange="toggleDetails('articulacoes', this)"> Sim</label>
-                        <label><input type="radio" name="Problemas Articulações (Anaminese)" value="Não" onchange="toggleDetails('articulacoes', this)"> Não</label>
+                        <label><input type="radio" name="articulacoes" value="Sim" required> Sim</label>
+                        <label><input type="radio" name="articulacoes" value="Não"> Não</label>
                     </div>
-                    <div id="articulacoesDetalhes" class="hidden-group">
-                        <label for="qualProblemaArticulacao" class="mt-2">Problema(s), localização e frequência:</label>
-                        <textarea id="qualProblemaArticulacao" name="Qual Problema Articulação (Anaminese)" rows="2" class="rounded-lg"></textarea>
-                    </div>
+                    <textarea id="articulacoes-obs" name="Articulações Observação" class="mt-4 hidden-group rounded-lg" placeholder="Quais articulações e qual o nível de dor?"></textarea>
                 </div>
 
                 <div class="form-group">
                     <label>Já teve alguma lesão muscular ou articular grave?</label>
                     <div class="radio-group flex mt-2">
-                        <label><input type="radio" name="Lesão Muscular Articular (Anaminese)" value="Sim" required onchange="toggleDetails('lesao', this)"> Sim</label>
-                        <label><input type="radio" name="Lesão Muscular Articular (Anaminese)" value="Não" onchange="toggleDetails('lesao', this)"> Não</label>
+                        <label><input type="radio" name="lesao" value="Sim" required> Sim</label>
+                        <label><input type="radio" name="lesao" value="Não"> Não</label>
                     </div>
-                    <div id="lesaoDetalhes" class="hidden-group">
-                        <label for="qualLesaoTratamento" class="mt-2">Lesão(ões), quando e tratamento:</label>
-                        <textarea id="qualLesaoTratamento" name="Qual Lesão e Tratamento (Anaminese)" rows="3" class="rounded-lg"></textarea>
-                    </div>
+                    <textarea id="lesao-obs" name="Lesão Observação" class="mt-4 hidden-group rounded-lg" placeholder="Qual lesão e qual o nível de dor?"></textarea>
                 </div>
 
                 <div class="form-group">
                     <label>Possui alguma restrição médica para exercícios físicos?</label>
                     <div class="radio-group flex mt-2">
-                        <label><input type="radio" name="Restrição Médica (Anaminese)" value="Sim" required onchange="toggleDetails('restricaoMedica', this)"> Sim</label>
-                        <label><input type="radio" name="Restrição Médica (Anaminese)" value="Não" onchange="toggleDetails('restricaoMedica', this)"> Não</label>
+                        <label><input type="radio" name="restricaoMedica" value="Sim" required> Sim</label>
+                        <label><input type="radio" name="restricaoMedica" value="Não"> Não</label>
                     </div>
-                    <div id="restricaoMedicaDetalhes" class="hidden-group">
-                        <label for="qualRestricaoMedica" class="mt-2">Restrição:</label>
-                        <textarea id="qualRestricaoMedica" name="Qual Restrição Médica (Anaminese)" rows="2" class="rounded-lg"></textarea>
-                    </div>
+                    <textarea id="restricaoMedica-obs" name="Restrição Médica Observação" class="mt-4 hidden-group rounded-lg" placeholder="Qual restrição e o motivo?"></textarea>
                 </div>
 
+                <!-- Seção: Hábitos de Vida e Treino -->
                 <div class="section-title">Hábitos de Vida e Treino</div>
-
+                <hr class="mb-6">
                 <div class="form-group">
                     <label>Fuma?</label>
                     <div class="radio-group flex mt-2">
-                        <label><input type="radio" name="Fuma (Anaminese)" value="Sim" required onchange="toggleDetails('fuma', this)"> Sim</label>
-                        <label><input type="radio" name="Fuma (Anaminese)" value="Não" onchange="toggleDetails('fuma', this)"> Não</label>
+                        <label><input type="radio" name="fuma" value="Sim" required> Sim</label>
+                        <label><input type="radio" name="fuma" value="Não"> Não</label>
                     </div>
-                    <div id="fumaDetalhes" class="hidden-group">
-                        <label class="mt-2">Frequência:</label>
+                    <div id="fuma-frequencia" class="mt-4 hidden-group">
+                        <label for="fumaFrequencia">Frequência:</label>
                         <div class="radio-group flex mt-2">
-                            <label><input type="radio" name="Frequência Fuma (Anaminese)" value="Frequentemente" required> Frequentemente</label>
-                            <label id="socialmenteFumaLabel"><input type="radio" name="Frequência Fuma (Anaminese)" value="Socialmente"> Socialmente</label>
-                            <label><input type="radio" name="Frequência Fuma (Anaminese)" value="Raramente"> Raramente</label>
+                            <label><input type="radio" name="fuma-frequencia" value="Frequentemente" required> Frequentemente</label>
+                            <label><input type="radio" name="fuma-frequencia" value="Socialmente"> Socialmente</label>
+                            <label><input type="radio" name="fuma-frequencia" value="Raramente"> Raramente</label>
                         </div>
                     </div>
                 </div>
@@ -446,15 +460,15 @@
                 <div class="form-group">
                     <label>Ingere bebida alcoólica?</label>
                     <div class="radio-group flex mt-2">
-                        <label><input type="radio" name="Ingere Álcool (Anaminese)" value="Sim" required onchange="toggleDetails('alcool', this)"> Sim</label>
-                        <label><input type="radio" name="Ingere Álcool (Anaminese)" value="Não" onchange="toggleDetails('alcool', this)"> Não</label>
+                        <label><input type="radio" name="alcool" value="Sim" required> Sim</label>
+                        <label><input type="radio" name="alcool" value="Não"> Não</label>
                     </div>
-                    <div id="alcoolDetalhes" class="hidden-group">
-                        <label class="mt-2">Frequência:</label>
+                    <div id="alcool-frequencia" class="mt-4 hidden-group">
+                        <label for="alcoolFrequencia">Frequência:</label>
                         <div class="radio-group flex mt-2">
-                            <label><input type="radio" name="Frequência Álcool (Anaminese)" value="Frequentemente" required> Frequentemente</label>
-                            <label><input type="radio" name="Frequência Álcool (Anaminese)" value="Socialmente"> Socialmente</label>
-                            <label><input type="radio" name="Frequência Álcool (Anaminese)" value="Raramente"> Raramente</label>
+                            <label><input type="radio" name="alcool-frequencia" value="Frequentemente" required> Frequentemente</label>
+                            <label><input type="radio" name="alcool-frequencia" value="Socialmente"> Socialmente</label>
+                            <label><input type="radio" name="alcool-frequencia" value="Raramente"> Raramente</label>
                         </div>
                     </div>
                 </div>
@@ -462,476 +476,718 @@
                 <div class="form-group">
                     <label>Pratica atividade física atualmente?</label>
                     <div class="radio-group flex mt-2">
-                        <label><input type="radio" name="Pratica Atividade Física (Anaminese)" value="Sim" required onchange="toggleDetails('atividadeFisica', this)"> Sim</label>
-                        <label><input type="radio" name="Pratica Atividade Física (Anaminese)" value="Não" onchange="toggleDetails('atividadeFisica', this)"> Não</label>
+                        <label><input type="radio" name="atividadeFisica" value="Sim" required> Sim</label>
+                        <label><input type="radio" name="atividadeFisica" value="Não"> Não</label>
                     </div>
-                    <div id="atividadeFisicaDetalhes" class="hidden-group">
-                        <label for="qualAtividadeFrequenciaTempo" class="mt-2">Atividade(s), frequência e há quanto tempo:</label>
-                        <textarea id="qualAtividadeFrequenciaTempo" name="Qual Atividade, Frequência e Tempo (Anaminese)" rows="3" class="rounded-lg"></textarea>
-                    </div>
+                    <textarea id="atividadeFisica-obs" name="Atividade Física Observação" class="mt-4 hidden-group rounded-lg" placeholder="Qual atividade, frequência e duração?"></textarea>
                 </div>
 
                 <div class="form-group">
                     <label>Qual seu nível de experiência com musculação?</label>
-                    <div class="radio-group flex flex-col mt-2 space-y-2">
-                        <label><input type="radio" name="Nível Experiência Musculação (Anaminese)" value="Iniciante" required onchange="toggleDetails('experiencia', this)"> Iniciante (nunca treinou ou treinou pouco)</label>
-                        <label><input type="radio" name="Nível Experiência Musculação (Anaminese)" value="Intermediário" onchange="toggleDetails('experiencia', this)"> Intermediário (treina há algum tempo, mas sem grande regularidade/intensidade)</label>
-                        <label><input type="radio" name="Nível Experiência Musculação (Anaminese)" value="Avançado" onchange="toggleDetails('experiencia', this)"> Avançado (treina há bastante tempo, com regularidade e intensidade)</label>
-                    </div>
-                    <div id="experienciaDetalhes" class="hidden-group">
-                        <label for="tempoTreinou" class="mt-2">Tempo que treinou:</label>
-                        <textarea id="tempoTreinou" name="Tempo Treinou (Anaminese)" rows="2" class="rounded-lg"></textarea>
+                    <div class="radio-group flex flex-col sm:flex-row mt-2">
+                        <label class="mb-2 sm:mb-0"><input type="radio" name="nivelMusculacao" value="Iniciante" required> Iniciante (nunca treinou ou treinou pouco)</label>
+                        <label class="mb-2 sm:mb-0"><input type="radio" name="nivelMusculacao" value="Intermediario"> Intermediário (treina há algum tempo, mas sem grande regularidade/intensidade)</label>
+                        <label class="mb-2 sm:mb-0"><input type="radio" name="nivelMusculacao" value="Avancado"> Avançado (treina há bastante tempo, com regularidade e intensidade)</label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Já treinou com personal trainer?</label>
                     <div class="radio-group flex mt-2">
-                        <label><input type="radio" name="Treinou Personal Trainer (Anaminese)" value="Sim" required> Sim</label>
-                        <label><input type="radio" name="Treinou Personal Trainer (Anaminese)" value="Não"> Não</label>
+                        <label><input type="radio" name="personalTrainer" value="Sim" required> Sim</label>
+                        <label><input type="radio" name="personalTrainer" value="Não"> Não</label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Qualidade do sono:</label>
                     <div class="radio-group flex mt-2">
-                        <label><input type="radio" name="Qualidade do Sono (Anaminese)" value="Boa" required onchange="toggleDetails('sono', this)"> Boa</label>
-                        <label><input type="radio" name="Qualidade do Sono (Anaminese)" value="Regular" onchange="toggleDetails('sono', this)"> Regular</label>
-                        <label><input type="radio" name="Qualidade do Sono (Anaminese)" value="Ruim" onchange="toggleDetails('sono', this)"> Ruim</label>
-                    </div>
-                    <div id="sonoDetalhes" class="hidden-group">
-                        <label for="horasSonoNoite">Horas/noite:</label>
-                        <input type="number" id="horasSonoNoite" name="Horas de Sono por Noite (Anaminese)" min="0" max="24" class="rounded-lg">
+                        <label><input type="radio" name="qualidadeSono" value="Boa" required> Boa</label>
+                        <label><input type="radio" name="qualidadeSono" value="Regular"> Regular</label>
+                        <label><input type="radio" name="qualidadeSono" value="Ruim"> Ruim</label>
                     </div>
                 </div>
 
+                <!-- Seção: Objetivos e Expectativas -->
                 <div class="section-title">Objetivos e Expectativas</div>
-
+                <hr class="mb-6">
                 <div class="form-group">
                     <label>Qual seu principal objetivo com a musculação? (Pode marcar mais de um)</label>
-                    <div class="checkbox-group flex flex-col mt-2 space-y-2">
-                        <label><input type="checkbox" name="Objetivos Musculação (Anaminese)" value="Ganho de Massa Muscular"> Ganho de Massa Muscular (Hipertrofia)</label>
-                        <label><input type="checkbox" name="Objetivos Musculação (Anaminese)" value="Emagrecimento / Perda de Gordura"> Emagrecimento / Perda de Gordura</label>
-                        <label><input type="checkbox" name="Objetivos Musculação (Anaminese)" value="Melhora da Força"> Melhora da Força</label>
-                        <label><input type="checkbox" name="Objetivos Musculação (Anaminese)" value="Melhora da Resistência"> Melhora da Resistência</label>
-                        <label><input type="checkbox" name="Objetivos Musculação (Anaminese)" value="Condicionamento Físico Geral"> Condicionamento Físico Geral</label>
-                        <label><input type="checkbox" name="Objetivos Musculação (Anaminese)" value="Saúde e Bem-estar"> Saúde e Bem-estar</label>
-                        <label><input type="checkbox" name="Objetivos Musculação (Anaminese)" value="Reabilitação / Fortalecimento" id="reabilitacaoCheckbox" onchange="toggleDetails('reabilitacao', this)"> Reabilitação / Fortalecimento</label>
-                        <div id="reabilitacaoDetalhes" class="hidden-group">
-                            <textarea id="especificarReabilitacao" name="Especificar Reabilitação (Anaminese)" rows="2" class="rounded-lg mt-2" placeholder="Especifique a reabilitação/fortalecimento"></textarea>
-                        </div>
+                    <div class="checkbox-group flex flex-wrap gap-4 mt-2">
+                        <label><input type="checkbox" name="objetivo" value="Ganho de Massa Muscular"> Ganho de Massa Muscular (Hipertrofia)</label>
+                        <label><input type="checkbox" name="objetivo" value="Emagrecimento / Perda de Gordura"> Emagrecimento / Perda de Gordura</label>
+                        <label><input type="checkbox" name="objetivo" value="Melhora da Força"> Melhora da Força</label>
+                        <label><input type="checkbox" name="objetivo" value="Melhora da Resistência"> Melhora da Resistência</label>
+                        <label><input type="checkbox" name="objetivo" value="Condicionamento Físico Geral"> Condicionamento Físico Geral</label>
+                        <label><input type="checkbox" name="objetivo" value="Saúde e Bem-estar"> Saúde e Bem-estar</label>
+                        <label><input type="checkbox" name="objetivo" value="Reabilitação / Fortalecimento"> Reabilitação / Fortalecimento</label>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="resultadoExpectativa">Qual resultado você espera alcançar e em quanto tempo (aproximadamente)?</label>
-                    <textarea id="resultadoExpectativa" name="Resultado e Expectativa (Anaminese)" rows="3" required class="rounded-lg"></textarea>
+                    <label>Qual resultado você espera alcançar e em quanto tempo (aproximadamente)?</label>
+                    <textarea name="resultadoEsperado" class="rounded-lg" placeholder="Descreva aqui suas expectativas..."></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label for="outrasInformacoes">Há algo mais que você gostaria de nos informar sobre sua saúde ou objetivos?</label>
-                    <textarea id="outrasInformacoes" name="Outras Informações (Anaminese)" rows="4" required class="rounded-lg"></textarea>
+                    <label>Há algo mais que você gostaria de nos informar sobre sua saúde ou objetivos?</label>
+                    <textarea name="informacoesAdicionais" class="rounded-lg" placeholder="Escreva aqui..."></textarea>
                 </div>
 
                 <p class="motivational-phrase">Seu corpo é capaz de tudo, é sua mente que você precisa convencer.</p>
 
-                <div class="flex justify-between mt-6">
-                    <button type="button" onclick="prevStep()" class="w-1/2 mr-2 bg-gray-500 hover:bg-gray-600">Voltar</button>
-                    <button type="button" onclick="nextStep(2)" class="button-highlight">Próximo</button>
+                <div class="flex justify-between mt-8 space-x-4">
+                    <button id="backButton1" type="button" class="w-1/2 bg-gray-300 text-gray-800 font-bold hover:bg-gray-400">Voltar</button>
+                    <button id="nextButton2" type="button" class="w-1/2 button-highlight">Próximo</button>
                 </div>
             </div>
 
             <!-- Etapa 3: Formulário Nutricional -->
             <div id="step3" class="hidden-group">
                 <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Formulário Nutricional</h2>
+                
+                <!-- Seção: Histórico de Saúde (Nutricional) -->
                 <div class="section-title">Histórico de Saúde (Nutricional)</div>
+                <hr class="mb-6">
                 <div class="form-group">
                     <label>Faz uso de alguma medicação contínua?</label>
                     <div class="radio-group flex mt-2">
-                        <label><input type="radio" name="Medicação Contínua (Nutricional)" value="Sim" required onchange="toggleDetails('medicaoContinuaNutricional', this)"> Sim</label>
-                        <label><input type="radio" name="Medicação Contínua (Nutricional)" value="Não" onchange="toggleDetails('medicaoContinuaNutricional', this)"> Não</label>
+                        <label><input type="radio" name="medicacao" value="Sim" required> Sim</label>
+                        <label><input type="radio" name="medicacao" value="Não"> Não</label>
                     </div>
-                    <div id="medicaoContinuaDetalhesNutricional" class="hidden-group">
-                        <label for="qualMedicacaoNutricional" class="mt-2">Medicamento(s):</label>
-                        <textarea id="qualMedicacaoNutricional" name="Qual Medicação (Nutricional)" rows="2" class="rounded-lg"></textarea>
-                    </div>
+                    <textarea id="medicacao-obs" name="Medicação contínua - Observação" class="mt-4 hidden-group rounded-lg" placeholder="Qual medicação e motivo?"></textarea>
                 </div>
 
                 <div class="form-group">
                     <label>Possui alguma doença crônica (Diabetes, Hipertensão, Cardíacas, Asma, Tireoide, etc.)?</label>
                     <div class="radio-group flex mt-2">
-                        <label><input type="radio" name="Doença Crônica (Nutricional)" value="Sim" required onchange="toggleDetails('doencaCronicaNutricional', this)"> Sim</label>
-                        <label><input type="radio" name="Doença Crônica (Nutricional)" value="Não" onchange="toggleDetails('doencaCronicaNutricional', this)"> Não</label>
+                        <label><input type="radio" name="doencaCronica" value="Sim" required> Sim</label>
+                        <label><input type="radio" name="doencaCronica" value="Não"> Não</label>
                     </div>
-                    <div id="doencaCronicaDetalhesNutricional" class="hidden-group">
-                        <label for="qualDoencaNutricional" class="mt-2">Qual(is) doença(s):</label>
-                        <textarea id="qualDoencaNutricional" name="Qual Doença Crônica (Nutricional)" rows="2" class="rounded-lg"></textarea>
-                    </div>
+                    <textarea id="doencaCronica-obs" name="Doença Crônica - Observação" class="mt-4 hidden-group rounded-lg" placeholder="Qual doença?"></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label>Possui intolerância alimentar?</label>
+                    <label>Possui intolerância ou alergia alimentar?</label>
                     <div class="radio-group flex mt-2">
-                        <label><input type="radio" name="Intolerância Alimentar (Nutricional)" value="Sim" required onchange="toggleDetails('intoleranciaAlimentarNutricional', this)"> Sim</label>
-                        <label><input type="radio" name="Intolerância Alimentar (Nutricional)" value="Não" onchange="toggleDetails('intoleranciaAlimentarNutricional', this)"> Não</label>
+                        <label><input type="radio" name="alergiaAlimentar" value="Sim" required> Sim</label>
+                        <label><input type="radio" name="alergiaAlimentar" value="Não"> Não</label>
                     </div>
-                    <div id="intoleranciaAlimentarDetalhesNutricional" class="hidden-group">
-                        <label for="qualIntoleranciaNutricional" class="mt-2">Qual(is) intolerância(s):</label>
-                        <textarea id="qualIntoleranciaNutricional" name="Qual Intolerância Alimentar (Nutricional)" rows="2" class="rounded-lg"></textarea>
-                    </div>
+                    <textarea id="alergiaAlimentar-obs" name="Alergia Alimentar - Observação" class="mt-4 hidden-group rounded-lg" placeholder="Qual intolerância ou alergia?"></textarea>
                 </div>
 
-                <div class="form-group">
-                    <label>Possui alergia alimentar?</label>
-                    <div class="radio-group flex mt-2">
-                        <label><input type="radio" name="Alergia Alimentar (Nutricional)" value="Sim" required onchange="toggleDetails('alergiaAlimentarNutricional', this)"> Sim</label>
-                        <label><input type="radio" name="Alergia Alimentar (Nutricional)" value="Não" onchange="toggleDetails('alergiaAlimentarNutricional', this)"> Não</label>
-                    </div>
-                    <div id="alergiaAlimentarDetalhesNutricional" class="hidden-group">
-                        <label for="qualAlergiaNutricional" class="mt-2">Qual(is) alergia(s):</label>
-                        <textarea id="qualAlergiaNutricional" name="Qual Alergia Alimentar (Nutricional)" rows="2" class="rounded-lg"></textarea>
-                    </div>
-                </div>
-
+                <!-- Seção: Hábitos Alimentares -->
                 <div class="section-title">Hábitos Alimentares</div>
-
+                <hr class="mb-6">
                 <div class="form-group">
                     <label>Você pula alguma refeição principal (café da manhã, almoço, jantar)?</label>
                     <div class="radio-group flex mt-2">
-                        <label><input type="radio" name="Pula Refeição Principal (Nutricional)" value="Sim" required onchange="toggleDetails('pulaRefeicaoNutricional', this)"> Sim</label>
-                        <label><input type="radio" name="Pula Refeição Principal (Nutricional)" value="Não" onchange="toggleDetails('pulaRefeicaoNutricional', this)"> Não</label>
+                        <label><input type="radio" name="pulaRefeicao" value="Sim" required> Sim</label>
+                        <label><input type="radio" name="pulaRefeicao" value="Não"> Não</label>
                     </div>
-                    <div id="pulaRefeicaoDetalhesNutricional" class="hidden-group">
-                        <label for="qualRefeicaoPula" class="mt-2">Qual(is) refeição(ões):</label>
-                        <textarea id="qualRefeicaoPula" name="Qual Refeição Pula (Nutricional)" rows="2" class="rounded-lg"></textarea>
-                    </div>
+                    <textarea id="pulaRefeicao-obs" name="Pula Refeição - Observação" class="mt-4 hidden-group rounded-lg" placeholder="Qual refeição?"></textarea>
                 </div>
 
                 <div class="form-group">
                     <label>Costuma ingerir frutas e vegetais diariamente?</label>
                     <div class="radio-group flex mt-2">
-                        <label><input type="radio" name="Ingere Frutas e Vegetais (Nutricional)" value="Sim" required> Sim</label>
-                        <label><input type="radio" name="Ingere Frutas e Vegetais (Nutricional)" value="Não"> Não</label>
+                        <label><input type="radio" name="frutasVegetais" value="Sim" required> Sim</label>
+                        <label><input type="radio" name="frutasVegetais" value="Não"> Não</label>
                     </div>
+                    <textarea id="frutasVegetais-obs" name="Frutas e Vegetais - Observação" class="mt-4 hidden-group rounded-lg" placeholder="Quais frutas/vegetais?"></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label>Quantidade de água (litros/dia):</label>
-                    <input type="number" id="quantidadeAgua" name="Quantidade de Água (Nutricional)" min="0" step="0.5" required class="rounded-lg" placeholder="Ex: 2.5">
+                    <label for="quantidadeAgua">Quantidade de água (litros/dia):</label>
+                    <input type="number" id="quantidadeAgua" name="Quantidade de Água" min="0" step="0.1" placeholder="Ex: 2.5" required class="rounded-lg">
                 </div>
 
                 <div class="form-group">
                     <label>Consumo de fast food, doces e ultraprocessados:</label>
                     <div class="radio-group flex mt-2">
-                        <label><input type="radio" name="Consumo Fast Food (Nutricional)" value="Muito Frequente" required> Muito Frequente</label>
-                        <label><input type="radio" name="Consumo Fast Food (Nutricional)" value="Ocasional"> Ocasional</label>
-                        <label><input type="radio" name="Consumo Fast Food (Nutricional)" value="Raramente"> Raramente</label>
+                        <label><input type="radio" name="consumoFastFood" value="Muito Frequente" required> Muito Frequente</label>
+                        <label><input type="radio" name="consumoFastFood" value="Ocasional"> Ocasional</label>
+                        <label><input type="radio" name="consumoFastFood" value="Raramente"> Raramente</label>
                     </div>
+                    <textarea id="consumoFastFood-obs" name="Consumo de fast food, doces e ultraprocessados - Observação" class="mt-4 hidden-group rounded-lg" placeholder="Qual tipo de alimento você consome?"></textarea>
                 </div>
 
                 <p class="motivational-phrase">Se alimentar bem é uma forma de autocuidado que te dá energia para brilhar.</p>
 
-                <div class="flex justify-between mt-6">
-                    <button type="button" onclick="prevStep()" class="w-1/2 mr-2 bg-gray-500 hover:bg-gray-600">Voltar</button>
-                    <button type="button" onclick="nextStep(3)" class="button-highlight">Próximo</button>
+                <div class="flex justify-between mt-8 space-x-4">
+                    <button id="backButton2" type="button" class="w-1/2 bg-gray-300 text-gray-800 font-bold hover:bg-gray-400">Voltar</button>
+                    <button id="nextButton3" type="button" class="w-1/2 button-highlight">Próximo</button>
                 </div>
             </div>
 
-            <!-- Etapa 4: Revisão e Confirmação (inicialmente oculto) -->
+            <!-- Etapa 4: Revisão e Confirmação -->
             <div id="step4" class="hidden-group">
-                <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Revisar e Enviar</h2>
-                <div class="review-data bg-gray-100 p-6 rounded-lg border border-gray-200">
-                    <div id="reviewContent"></div>
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Revisão e Confirmação</h2>
+                
+                <hr class="my-6">
+                
+                <div class="review-data space-y-4">
+                    <!-- Conteúdo será gerado dinamicamente via JavaScript -->
                 </div>
-                <div class="welcome-message" id="welcomeMessage">
-                    Formulário enviado com sucesso! Aguarde o contato do Personal.
-                </div>
-                <p class="motivational-phrase">Seu primeiro passo para a transformação foi dado! Parabéns!</p>
-                <div class="flex justify-between mt-6">
-                    <button type="button" onclick="prevStep()" class="w-1/2 mr-2 bg-gray-500 hover:bg-gray-600">Voltar</button>
-                    <button type="submit" id="submitBtn" class="button-highlight">Enviar</button>
+                
+                <p class="motivational-phrase">Seu corpo é capaz de tudo, é sua mente que você precisa convencer.</p>
+
+                <div class="flex justify-between mt-8 space-x-4">
+                    <button id="backButton3" type="button" class="w-1/2 bg-gray-300 text-gray-800 font-bold hover:bg-gray-400">Voltar</button>
+                    <button id="submitButton" type="submit" class="w-1/2 button-highlight">Enviar Formulário</button>
                 </div>
             </div>
+            
         </form>
     </div>
 
+    <!-- Custom Message Box -->
+    <div id="custom-message-box" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+        <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full">
+            <h3 id="message-title" class="text-xl font-bold mb-4"></h3>
+            <p id="message-content" class="text-gray-700 mb-6"></p>
+            <div class="flex justify-end">
+                <button id="message-ok-button" class="px-4 py-2 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition">OK</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Mapeamento de preços por plano e frequência semanal
-        const planPrices = {
-            'Trimestral Individual': { '2': 300, '3': 350, '4': 400, '5': 450 },
-            'Semestral Individual': { '2': 280, '3': 330, '4': 380, '5': 430 },
-            'Trimestral Casal': { '2': 500, '3': 550, '4': 600, '5': 650 },
-            'Semestral Casal': { '2': 480, '3': 530, '4': 580, '5': 630 },
-            'Online': 250, // Preço fixo para o plano online
-        };
+        const form = document.getElementById('multiStepForm');
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        const step4 = document.getElementById('step4');
+        const nextButton1 = document.getElementById('nextButton1');
+        const nextButton2 = document.getElementById('nextButton2');
+        const nextButton3 = document.getElementById('nextButton3');
+        const backButton1 = document.getElementById('backButton1');
+        const backButton2 = document.getElementById('backButton2');
+        const backButton3 = document.getElementById('backButton3');
+        const submitButton = document.getElementById('submitButton');
+        const dataNascimentoInput = document.getElementById('dataNascimento');
+        const idadeInput = document.getElementById('idade');
+        const cepInput = document.getElementById('cep');
+        const ruaInput = document.getElementById('rua');
+        const bairroInput = document.getElementById('bairro');
+        const cidadeInput = document.getElementById('cidade');
+        const dataInicioInput = document.getElementById('dataInicio');
+        const planejamentoAlimentarRadios = document.querySelectorAll('input[name="Planejamento Alimentar"]');
+        const planWarningMessage = document.getElementById('planWarningMessage');
+        const planDetailsDisplay = document.getElementById('planDetailsDisplay');
+        const valorEstimadoDisplay = document.getElementById('valorEstimado');
+        const valorEstimadoHidden = document.getElementById('valorEstimadoHidden');
+        const planoRadios = document.querySelectorAll('input[name="Plano Escolhido"]');
+        const frequenciaContainer = document.getElementById('frequenciaContainer');
+        const frequenciaSelect = document.getElementById('frequenciaSemana');
+        const formaPagamentoSelect = document.getElementById('formaPagamento');
+        const reviewDataContainer = document.querySelector('.review-data');
+        const creditoParceladoOption = document.querySelector('option[value="CreditoParcelado"]');
 
-        // Mapeamento dos detalhes dos planos
-        const planDescriptions = {
-            'Trimestral Individual': "Plano de 3 meses de duração, treino individual presencial. Acompanhamento e avaliação física a cada 30 dias.",
-            'Semestral Individual': "Plano de 6 meses de duração, treino individual presencial. Acompanhamento e avaliação física a cada 30 dias.",
-            'Trimestral Casal': "Plano de 3 meses de duração, treino presencial para casal. Acompanhamento e avaliação física a cada 30 dias.",
-            'Semestral Casal': "Plano de 6 meses de duração, treino presencial para casal. Acompanhamento e avaliação física a cada 30 dias.",
-            'Online': "Plano totalmente online, via plataforma de treino exclusiva. Acesso a treinos personalizados, acompanhamento e suporte via WhatsApp.",
-        };
+        // New function to display a custom message box
+        function showMessage(message, type = 'info') {
+            const messageBox = document.getElementById('custom-message-box');
+            const messageTitle = document.getElementById('message-title');
+            const messageContent = document.getElementById('message-content');
+            const okButton = document.getElementById('message-ok-button');
 
-        let currentStep = 1;
+            messageContent.innerHTML = message;
+            messageBox.classList.remove('hidden');
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // Adiciona listener para o campo de data de nascimento para calcular a idade
-            const dataNascimentoInput = document.getElementById('dataNascimento');
-            if (dataNascimentoInput) {
-                dataNascimentoInput.addEventListener('change', updateAge);
+            // Set title and colors based on type
+            switch (type) {
+                case 'success':
+                    messageTitle.innerText = 'Sucesso';
+                    messageTitle.classList.add('text-green-600');
+                    break;
+                case 'error':
+                    messageTitle.innerText = 'Erro!';
+                    messageTitle.classList.add('text-red-600');
+                    break;
+                case 'info':
+                default:
+                    messageTitle.innerText = 'Informação';
+                    messageTitle.classList.add('text-blue-600');
+                    break;
             }
 
-            // Adiciona listeners para os radio buttons de plano e planejamento para recalcular o preço
-            const form = document.getElementById('multiStepForm');
-            form.addEventListener('change', (event) => {
-                const target = event.target;
-                if (target.name === 'Plano Escolhido' || target.name === 'Planejamento Alimentar') {
-                    calculatePrice();
+            okButton.onclick = () => {
+                messageBox.classList.add('hidden');
+                messageTitle.classList.remove('text-green-600', 'text-red-600', 'text-blue-600');
+            };
+        }
+
+        // Valores e regras
+        const planData = {
+            "Trimestral Individual": { description: "Plano 3 meses – treino presencial\nHorário exclusivo\nTreinos via app com vídeos ilustrativos e/ou PDF\nDuas avaliações físicas", prices: { 2: 400.00, 3: 450.00, 4: 550.00, 5: 650.00 }, duration: 3 },
+            "Trimestral Compartilhado": { description: "Plano 3 meses – treino presencial\nDependendo da demanda do personal, horário poderá ser compartilhado com outro aluno.\nTreinos via app com vídeos ilustrativos e/ou PDF\nDuas avaliações físicas", prices: { 2: 350.00, 3: 390.00, 4: 480.00, 5: 580.00 }, duration: 3 },
+            "Semestral Individual": { description: "Plano 6 meses – treino presencial\nHorário exclusivo\nTreinos via app com vídeos ilustrativos e/ou PDF\nDuas avaliações físicas", prices: { 2: 370.00, 3: 420.00, 4: 500.00, 5: 600.00 }, duration: 6 },
+            "Semestral Compartilhado": { description: "Plano 6 meses – treino presencial\nDependendo da demanda do personal, horário poderá ser compartilhado com outro aluno.\nTreinos via app com vídeos ilustrativos e/ou PDF\nDuas avaliações físicas", prices: { 2: 320.00, 3: 360.00, 4: 460.00, 5: 560.00 }, duration: 6 },
+            "Trimestral Casal": { description: "Plano 3 meses – treino presencial\nAtendimento deverá ser executado no mesmo horário, para qualquer alteração, favor verificar disponibilidade do personal.\nTreinos via app com vídeos ilustrativos e/ou PDF\nDuas avaliações físicas", prices: { 2: 640.00, 3: 740.00, 4: 880.00, 5: 1080.00 }, duration: 3 },
+            "Semestral Casal": { description: "Plano 6 meses – treino presencial\nAtendimento deverá ser executado no mesmo horário, para qualquer alteração, favor verificar disponibilidade do personal.\nTreinos via app com vídeos ilustrativos e/ou PDF\nDuas avaliações físicas", prices: { 2: 560.00, 3: 600.00, 4: 840.00, 5: 1040.00 }, duration: 6 },
+            "Online": { description: "Plano totalmente online\nAcesso a treinos personalizados via app com vídeos ilustrativos e/ou PDF\nAcompanhamento e suporte via WhatsApp.", price: 160.00, duration: 1 }
+        };
+
+        const MEAL_PLAN_COST = 150.00;
+        const TAX_RATES = {
+            "Dinheiro": 0.0,
+            "Pix": 0.0,
+            "Debito": 0.0199,
+            "CreditoAVista": 0.0498,
+            "CreditoParcelado": 0.06,
+            "Boleto": 5.00
+        };
+
+        // Funções
+        function calculateAge() {
+            const birthDate = new Date(dataNascimentoInput.value);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDifference = today.getMonth() - birthDate.getMonth();
+            if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            idadeInput.value = age > 0 ? `${age} anos` : '';
+            updatePlanDisplay();
+        }
+
+        function togglePlanElements() {
+            const hasDataInicio = dataInicioInput.value !== '';
+            const hasPlanoAlimentar = document.querySelector('input[name="Planejamento Alimentar"]:checked') !== null;
+            const selectedPlano = document.querySelector('input[name="Plano Escolhido"]:checked');
+
+            if (selectedPlano && hasDataInicio && hasPlanoAlimentar) {
+                planWarningMessage.classList.add('hidden');
+                valorEstimadoDisplay.classList.remove('hidden-group');
+                updatePlanDisplay();
+            } else {
+                planWarningMessage.classList.remove('hidden');
+                valorEstimadoDisplay.classList.add('hidden-group');
+            }
+        }
+
+        function updatePlanDetails(selectedPlanoValue) {
+            const planoDetalhes = planData[selectedPlanoValue];
+            if (!planoDetalhes) {
+                planDetailsDisplay.classList.add('hidden-group');
+                return;
+            }
+
+            let detailsHtml = '';
+            detailsHtml += `<strong>Detalhes do Plano:</strong><ul>`;
+            const descriptionLines = planoDetalhes.description.split('\n');
+            descriptionLines.forEach(line => {
+                detailsHtml += `<li>${line}</li>`;
+            });
+            detailsHtml += `</ul>`;
+            planDetailsDisplay.innerHTML = detailsHtml;
+            planDetailsDisplay.classList.remove('hidden-group');
+        }
+
+        function togglePaymentOptions() {
+            const selectedPlano = document.querySelector('input[name="Plano Escolhido"]:checked');
+            if (selectedPlano && selectedPlano.value === "Online") {
+                if (creditoParceladoOption) {
+                    creditoParceladoOption.style.display = 'none';
+                    if (formaPagamentoSelect.value === 'CreditoParcelado') {
+                        formaPagamentoSelect.value = '';
+                    }
+                }
+            } else {
+                if (creditoParceladoOption) {
+                    creditoParceladoOption.style.display = '';
+                }
+            }
+        }
+
+        function updatePlanDisplay() {
+            const selectedPlano = document.querySelector('input[name="Plano Escolhido"]:checked');
+            const planejamentoAlimentar = document.querySelector('input[name="Planejamento Alimentar"]:checked');
+            const selectedFrequencia = frequenciaSelect.value;
+            const formaPagamento = formaPagamentoSelect.value;
+
+            if (!selectedPlano || !planejamentoAlimentar || !formaPagamento) {
+                valorEstimadoDisplay.classList.add('hidden-group');
+                return;
+            }
+            
+            const planoDetalhes = planData[selectedPlano.value];
+            let monthlyPrice;
+            let totalPlanPriceWithoutInterest;
+
+            if (selectedPlano.value === "Online") {
+                monthlyPrice = planoDetalhes.price;
+                frequenciaContainer.classList.add('hidden-group');
+            } else {
+                if (!selectedFrequencia) {
+                    valorEstimadoDisplay.classList.add('hidden-group');
+                    return;
+                }
+                monthlyPrice = planoDetalhes.prices[selectedFrequencia];
+                frequenciaContainer.classList.remove('hidden-group');
+            }
+
+            if (planejamentoAlimentar.value === "Sim") {
+                monthlyPrice += MEAL_PLAN_COST;
+            }
+
+            totalPlanPriceWithoutInterest = monthlyPrice * planoDetalhes.duration;
+
+            let finalPriceText = '';
+
+            // Lógica de cálculo dos valores
+            switch (formaPagamento) {
+                case 'Dinheiro':
+                case 'Pix':
+                case 'Debito':
+                case 'CreditoAVista':
+                    const taxRate = TAX_RATES[formaPagamento];
+                    const finalPrice = totalPlanPriceWithoutInterest * (1 + taxRate);
+                    const finalMonthlyPrice = monthlyPrice * (1 + taxRate);
+                    finalPriceText = `
+                        <p class="mb-1"><strong>Valor Mensal Estimado:</strong> R$ ${finalMonthlyPrice.toFixed(2).replace('.', ',')}</p>
+                        <p><strong>Valor Total do Plano:</strong> R$ ${finalPrice.toFixed(2).replace('.', ',')}</p>
+                    `;
+                    break;
+                case 'CreditoParcelado':
+                    const totalWithInterest = totalPlanPriceWithoutInterest * (1 + TAX_RATES["CreditoParcelado"]);
+                    finalPriceText = `<p class="mb-2"><strong>Valor Total do Plano (sem juros):</strong> R$ ${totalPlanPriceWithoutInterest.toFixed(2).replace('.', ',')}</p>`;
+                    finalPriceText += `<p class="font-bold mb-1">Valores por Parcela:</p><ul>`;
+                    for (let i = 1; i <= 6; i++) {
+                        const valorParcela = totalWithInterest / i;
+                        finalPriceText += `<li><strong>${i}x</strong> de R$ ${valorParcela.toFixed(2).replace('.', ',')}</li>`;
+                    }
+                    finalPriceText += `</ul>`;
+                    break;
+                case 'Boleto':
+                    const finalPriceBoleto = totalPlanPriceWithoutInterest + (planoDetalhes.duration * TAX_RATES["Boleto"]);
+                    finalPriceText = `
+                        <p class="mb-1"><strong>Valor Mensal Estimado:</strong> R$ ${monthlyPrice.toFixed(2).replace('.', ',')}</p>
+                        <p><strong>Valor Total do Plano:</strong> R$ ${finalPriceBoleto.toFixed(2).replace('.', ',')}</p>
+                    `;
+                    break;
+                default:
+                    valorEstimadoDisplay.classList.add('hidden-group');
+                    return;
+            }
+
+            valorEstimadoDisplay.innerHTML = finalPriceText;
+            valorEstimadoHidden.value = valorEstimadoDisplay.innerText;
+            valorEstimadoDisplay.classList.remove('hidden-group');
+        }
+        
+        // Lógica para mostrar/esconder campos extras da anamnese e nutricional
+        const conditionalFields = {
+            'cirurgia': 'cirurgia-obs',
+            'coluna': 'coluna-obs',
+            'articulacoes': 'articulacoes-obs',
+            'lesao': 'lesao-obs',
+            'restricaoMedica': 'restricaoMedica-obs',
+            'fuma': 'fuma-frequencia',
+            'alcool': 'alcool-frequencia',
+            'atividadeFisica': 'atividadeFisica-obs',
+            'medicacao': 'medicacao-obs',
+            'doencaCronica': 'doencaCronica-obs',
+            'alergiaAlimentar': 'alergiaAlimentar-obs',
+            'pulaRefeicao': 'pulaRefeicao-obs',
+            'frutasVegetais': 'frutasVegetais-obs',
+            'consumoFastFood': 'consumoFastFood-obs'
+        };
+
+        function setupConditionalFields() {
+            for (const name in conditionalFields) {
+                const radios = document.querySelectorAll(`input[name="${name}"]`);
+                const targetElement = document.getElementById(conditionalFields[name]);
+
+                if (radios && targetElement) {
+                    radios.forEach(radio => {
+                        radio.addEventListener('change', (event) => {
+                            if (event.target.value === 'Sim' || event.target.name === 'consumoFastFood') {
+                                targetElement.classList.remove('hidden-group');
+                                // Adiciona 'required' ao campo de texto/textarea quando visível
+                                if (targetElement.tagName === 'TEXTAREA' || targetElement.tagName === 'INPUT') {
+                                    targetElement.setAttribute('required', '');
+                                } else {
+                                    // Para grupos de radio, faz os inputs internos obrigatórios
+                                    targetElement.querySelectorAll('input').forEach(input => input.setAttribute('required', ''));
+                                }
+                            } else {
+                                targetElement.classList.add('hidden-group');
+                                // Remove 'required' quando o campo não está visível
+                                if (targetElement.tagName === 'TEXTAREA' || targetElement.tagName === 'INPUT') {
+                                    targetElement.removeAttribute('required');
+                                    targetElement.value = ''; // Limpa o valor
+                                } else {
+                                    targetElement.querySelectorAll('input').forEach(input => input.removeAttribute('required'));
+                                    // Desmarca os rádios internos para evitar conflitos
+                                    targetElement.querySelectorAll('input:checked').forEach(input => input.checked = false);
+                                }
+                            }
+                        });
+                    });
+                }
+            }
+        }
+
+        function populateReviewPage() {
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            
+            reviewDataContainer.innerHTML = '';
+
+            // Box para Informações Pessoais e do Plano
+            let personalAndPlanHtml = '';
+            for (const [key, value] of Object.entries(data)) {
+                if (key !== 'valorEstimado' && key !== 'objetivo' && !key.includes('Observação') && !key.includes('frequencia') && !key.includes('Pratica atividade') && value.trim() !== '') {
+                    personalAndPlanHtml += `<p><strong>${key}:</strong> ${value}</p>`;
+                }
+            }
+            const personalBox = document.createElement('div');
+            personalBox.className = 'review-box';
+            personalBox.innerHTML = '<div class="section-title">Informações Pessoais e do Plano</div><hr class="mb-4">' + personalAndPlanHtml;
+            reviewDataContainer.appendChild(personalBox);
+
+            // Box para Informações de Anamnese
+            let anamneseHtml = '';
+            for (const [key, value] of Object.entries(data)) {
+                if ((key.includes('Observação') || key.includes('frequencia') || key.includes('Pratica atividade') || key.includes('nivelMusculacao') || key.includes('personalTrainer') || key.includes('qualidadeSono') || key.includes('resultadoEsperado') || key.includes('informacoesAdicionais')) && value.trim() !== '') {
+                    anamneseHtml += `<p><strong>${key}:</strong> ${value}</p>`;
+                }
+            }
+            const objetivos = formData.getAll('objetivo');
+            if (objetivos.length > 0) {
+                 anamneseHtml += `<p><strong>Objetivos:</strong> ${objetivos.join(', ')}</p>`;
+            }
+            if (anamneseHtml !== '') {
+                const anamneseBox = document.createElement('div');
+                anamneseBox.className = 'review-box';
+                anamneseBox.innerHTML = '<div class="section-title">Informações de Anamnese</div><hr class="mb-4">' + anamneseHtml;
+                reviewDataContainer.appendChild(anamneseBox);
+            }
+            
+
+            // Box para Informações Nutricionais, se houver
+            const planejamentoAlimentar = document.querySelector('input[name="Planejamento Alimentar"]:checked');
+            if (planejamentoAlimentar && planejamentoAlimentar.value === "Sim") {
+                let nutricionalHtml = '';
+                 for (const [key, value] of Object.entries(data)) {
+                    if ((key.includes('Medicação') || key.includes('Doença') || key.includes('Alergia') || key.includes('Pula') || key.includes('Frutas') || key.includes('Água') || key.includes('Fast')) && value.trim() !== '') {
+                        nutricionalHtml += `<p><strong>${key}:</strong> ${value}</p>`;
+                    }
+                }
+                if (nutricionalHtml !== '') {
+                    const nutricionalBox = document.createElement('div');
+                    nutricionalBox.className = 'review-box';
+                    nutricionalBox.innerHTML = '<div class="section-title">Informações Nutricionais</div><hr class="mb-4">' + nutricionalHtml;
+                    reviewDataContainer.appendChild(nutricionalBox);
+                }
+            }
+        }
+        
+        // Listener para a navegação
+        nextButton1.addEventListener('click', function() {
+            const requiredFields = document.querySelectorAll('#step1 [required]');
+            let missingFields = [];
+            const selectedPlano = document.querySelector('input[name="Plano Escolhido"]:checked');
+            const isOnlinePlan = selectedPlano && selectedPlano.value === "Online";
+            
+            requiredFields.forEach(field => {
+                // Se o campo de frequência e o plano online estiverem selecionados, ignora a validação.
+                if (field.id === 'frequenciaSemana' && isOnlinePlan) {
+                    return;
+                }
+                
+                if (field.type === 'radio' && !document.querySelector(`input[name="${field.name}"]:checked`)) {
+                    if (!missingFields.includes(field.name)) {
+                        missingFields.push(field.name);
+                    }
+                } else if (field.value.trim() === '') {
+                    missingFields.push(field.id || field.name);
                 }
             });
 
-            // Adiciona listener para os campos de seleção de frequência e pagamento
-            const frequenciaSemanaSelect = document.getElementById('frequenciaSemana');
-            const formaPagamentoSelect = document.getElementById('formaPagamento');
-            if (frequenciaSemanaSelect) {
-                frequenciaSemanaSelect.addEventListener('change', calculatePrice);
-            }
-            if (formaPagamentoSelect) {
-                formaPagamentoSelect.addEventListener('change', calculatePrice);
+            if (missingFields.length > 0) {
+                const friendlyNames = {
+                    'nomeCompleto': 'Nome Completo', 'cpf': 'CPF', 'dataNascimento': 'Data de Nascimento', 'altura': 'Altura', 'peso': 'Peso',
+                    'Genero': 'Gênero', 'profissao': 'Profissão', 'telefoneContato': 'Telefone de Contato', 'contatoEmergencia': 'Contato de Emergência',
+                    'rua': 'Rua', 'numeroCasa': 'Número da Casa', 'bairro': 'Bairro', 'cidade': 'Cidade', 'email': 'E-mail',
+                    'dataInicio': 'Data de Início', 'Planejamento Alimentar': 'Planejamento Alimentar',
+                    'Plano Escolhido': 'Plano Escolhido', 'frequenciaSemana': 'Frequência Semanal', 'formaPagamento': 'Forma de Pagamento'
+                };
+                const formattedMissing = missingFields.map(field => friendlyNames[field] || field).join(', ');
+                showMessage(`Por favor, preencha os seguintes campos obrigatórios: ${formattedMissing}`, 'error');
+            } else {
+                step1.classList.add('hidden-group');
+                step2.classList.remove('hidden-group');
+                // Rola para o topo da próxima seção
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         });
 
-        // Função para calcular e exibir a idade
-        function updateAge() {
-            const dataNasc = document.getElementById('dataNascimento').value;
-            const idadeDisplay = document.getElementById('idadeDisplay');
-            const idadeHidden = document.getElementById('idadeHidden');
+        nextButton2.addEventListener('click', function() {
+            const requiredFields = document.querySelectorAll('#step2 [required]');
+            let missingFields = [];
+            const planejamentoAlimentar = document.querySelector('input[name="Planejamento Alimentar"]:checked').value;
 
-            if (dataNasc) {
-                const dataAtual = new Date();
-                const dataNascimento = new Date(dataNasc);
-                let idade = dataAtual.getFullYear() - dataNascimento.getFullYear();
-                const mes = dataAtual.getMonth() - dataNascimento.getMonth();
-                if (mes < 0 || (mes === 0 && dataAtual.getDate() < dataNascimento.getDate())) {
-                    idade--;
-                }
-                idadeDisplay.textContent = `(${idade} anos)`;
-                idadeHidden.value = idade; // Atualiza o campo oculto para envio
-            } else {
-                idadeDisplay.textContent = '';
-                idadeHidden.value = '';
-            }
-        }
-
-        // Função para mostrar/ocultar campos de detalhes com base na resposta "Sim" ou "Não"
-        function toggleDetails(groupName, radio) {
-            const detailsDiv = document.getElementById(groupName + 'Detalhes');
-            if (detailsDiv) {
-                if (radio.value === 'Sim') {
-                    detailsDiv.style.display = 'block';
-                    // Requer os campos de texto se a opção "Sim" for selecionada
-                    const textarea = detailsDiv.querySelector('textarea');
-                    const input = detailsDiv.querySelector('input[type="number"]');
-                    if (textarea) textarea.required = true;
-                    if (input) input.required = true;
-                } else {
-                    detailsDiv.style.display = 'none';
-                    // Remove a obrigatoriedade se a opção "Não" for selecionada
-                    const textarea = detailsDiv.querySelector('textarea');
-                    const input = detailsDiv.querySelector('input[type="number"]');
-                    if (textarea) {
-                        textarea.required = false;
-                        textarea.value = ''; // Limpa o valor
-                    }
-                    if (input) {
-                        input.required = false;
-                        input.value = ''; // Limpa o valor
-                    }
-                }
-            }
-        }
-
-        // Função para calcular o preço estimado
-        function calculatePrice() {
-            const planoRadio = document.querySelector('input[name="Plano Escolhido"]:checked');
-            const planejamentoRadio = document.querySelector('input[name="Planejamento Alimentar"]:checked');
-            const frequenciaSelect = document.getElementById('frequenciaSemana');
-            const formaPagamentoSelect = document.getElementById('formaPagamento');
-            const valorEstimadoDiv = document.getElementById('valorEstimado');
-            const valorEstimadoHidden = document.getElementById('valorEstimadoHidden');
-            const planDetailsDisplay = document.getElementById('planDetailsDisplay');
-
-            let basePrice = 0;
-            let planoSelecionado = null;
-            let frequenciaSelecionada = frequenciaSelect.value;
-            let planejamentoAlimentar = planejamentoRadio ? planejamentoRadio.value : null;
-
-            if (planoRadio) {
-                planoSelecionado = planoRadio.value;
-            }
-
-            // Exibe os detalhes do plano selecionado
-            if (planoSelecionado && planDescriptions[planoSelecionado]) {
-                planDetailsDisplay.innerHTML = `<p>${planDescriptions[planoSelecionado]}</p>`;
-                planDetailsDisplay.classList.remove('hidden-group');
-            } else {
-                planDetailsDisplay.classList.add('hidden-group');
-            }
-
-            // Calcula o preço base
-            if (planoSelecionado === 'Online') {
-                basePrice = planPrices[planoSelecionado];
-            } else if (planoSelecionado && frequenciaSelecionada) {
-                basePrice = planPrices[planoSelecionado][frequenciaSelecionada];
-            }
-
-            // Adiciona o custo do planejamento alimentar se selecionado "Sim"
-            if (planejamentoAlimentar === 'Sim') {
-                basePrice += 100; // Adiciona R$100,00 para o planejamento
-            }
-
-            // Aplica o acréscimo da forma de pagamento
-            let formaPagamento = formaPagamentoSelect.value;
-            let finalPrice = basePrice;
-            if (formaPagamento === 'Débito') {
-                finalPrice += finalPrice * 0.0199;
-            } else if (formaPagamento === 'Crédito (à vista)') {
-                finalPrice += finalPrice * 0.0498;
-            } else if (formaPagamento === 'Crédito (parcelado até 6x)') {
-                finalPrice += finalPrice * 0.06;
-            } else if (formaPagamento === 'Boleto') {
-                finalPrice += 5;
-            }
-
-            if (basePrice > 0 && formaPagamento) {
-                valorEstimadoDiv.textContent = `Valor Estimado: R$ ${finalPrice.toFixed(2)}`;
-                valorEstimadoHidden.value = finalPrice.toFixed(2);
-            } else {
-                valorEstimadoDiv.textContent = "Selecione as opções para ver o valor estimado.";
-                valorEstimadoHidden.value = '';
-            }
-        }
-
-        // Função para validar campos obrigatórios
-        function validateStep(stepId) {
-            const step = document.getElementById('step' + stepId);
-            const requiredFields = step.querySelectorAll('[required]');
-            let isValid = true;
             requiredFields.forEach(field => {
-                const parentGroup = field.closest('.form-group');
-                let errorMessage = parentGroup.querySelector('.error-message');
-                if (!field.checkValidity()) {
-                    isValid = false;
-                    if (!errorMessage) {
-                        errorMessage = document.createElement('p');
-                        errorMessage.className = 'error-message';
-                        parentGroup.appendChild(errorMessage);
+                if (field.type === 'radio' && !document.querySelector(`input[name="${field.name}"]:checked`)) {
+                    if (!missingFields.includes(field.name)) {
+                        missingFields.push(field.name);
                     }
-                    errorMessage.textContent = 'Este campo é obrigatório.';
-                    // Para os radio buttons, a validação é um pouco diferente
-                    if (field.type === 'radio' && !document.querySelector(`input[name="${field.name}"]:checked`)) {
-                        isValid = false;
-                        if (!errorMessage) {
-                           errorMessage = document.createElement('p');
-                           errorMessage.className = 'error-message';
-                           parentGroup.appendChild(errorMessage);
-                        }
-                        errorMessage.textContent = 'Por favor, selecione uma opção.';
-                    }
-                } else {
-                    if (errorMessage) {
-                        errorMessage.remove();
-                    }
+                } else if (field.value.trim() === '') {
+                    missingFields.push(field.id || field.name);
                 }
             });
 
-            // Lógica extra para campos dinâmicos que podem ser required
-            const dynamicFields = step.querySelectorAll('.hidden-group textarea[required], .hidden-group input[required]');
-            dynamicFields.forEach(field => {
-                const parentGroup = field.closest('.form-group');
-                let errorMessage = parentGroup.querySelector('.error-message');
-                if (field.style.display !== 'none' && !field.value) {
-                    isValid = false;
-                    if (!errorMessage) {
-                        errorMessage = document.createElement('p');
-                        errorMessage.className = 'error-message';
-                        parentGroup.appendChild(errorMessage);
+            if (missingFields.length > 0) {
+                const friendlyNames = {
+                    'cirurgia': 'Cirurgia', 'coluna': 'Problemas de Coluna', 'articulacoes': 'Problemas nas Articulações', 'lesao': 'Lesão Grave', 'restricaoMedica': 'Restrição Médica',
+                    'fuma': 'Fuma?', 'fuma-frequencia': 'Frequência do Hábito de Fumar',
+                    'alcool': 'Ingere bebida alcoólica?', 'alcool-frequencia': 'Frequência do Consumo de Álcool',
+                    'atividadeFisica': 'Atividade Física', 'atividadeFisica-obs': 'Detalhes da Atividade Física',
+                    'nivelMusculacao': 'Nível de Experiência com Musculação', 'personalTrainer': 'Treinou com Personal Trainer', 'qualidadeSono': 'Qualidade do Sono'
+                };
+                const formattedMissing = missingFields.map(field => friendlyNames[field] || field).join(', ');
+                showMessage(`Por favor, preencha os seguintes campos obrigatórios: ${formattedMissing}`, 'error');
+            } else {
+                 if (planejamentoAlimentar === "Sim") {
+                    step2.classList.add('hidden-group');
+                    step3.classList.remove('hidden-group');
+                 } else {
+                    populateReviewPage();
+                    step2.classList.add('hidden-group');
+                    step4.classList.remove('hidden-group');
+                 }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        nextButton3.addEventListener('click', function() {
+            const requiredFields = document.querySelectorAll('#step3 [required]');
+            let missingFields = [];
+            requiredFields.forEach(field => {
+                 if (field.type === 'radio' && !document.querySelector(`input[name="${field.name}"]:checked`)) {
+                    if (!missingFields.includes(field.name)) {
+                        missingFields.push(field.name);
                     }
-                    errorMessage.textContent = 'Este campo é obrigatório, pois você marcou "Sim".';
-                } else if (errorMessage) {
-                    errorMessage.remove();
+                } else if (field.value.trim() === '') {
+                    missingFields.push(field.id || field.name);
                 }
             });
 
-            return isValid;
-        }
+             if (missingFields.length > 0) {
+                const friendlyNames = {
+                    'medicacao': 'Medicação', 'doencaCronica': 'Doença Crônica', 'alergiaAlimentar': 'Alergia Alimentar',
+                    'pulaRefeicao': 'Pula Refeição', 'frutasVegetais': 'Frutas e Vegetais', 'quantidadeAgua': 'Quantidade de Água', 'consumoFastFood': 'Consumo de Fast Food'
+                };
+                const formattedMissing = missingFields.map(field => friendlyNames[field] || field).join(', ');
+                showMessage(`Por favor, preencha os seguintes campos obrigatórios: ${formattedMissing}`, 'error');
+             } else {
+                populateReviewPage();
+                step3.classList.add('hidden-group');
+                step4.classList.remove('hidden-group');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+             }
+        });
 
-        // Função para avançar para a próxima etapa
-        function nextStep(step) {
-            if (!validateStep(step)) {
-                return;
-            }
-            document.getElementById('step' + currentStep).classList.add('hidden-group');
-            currentStep++;
-            document.getElementById('step' + currentStep).classList.remove('hidden-group');
-            if (currentStep === 4) {
-                showReview();
+        backButton1.addEventListener('click', function() {
+            step2.classList.add('hidden-group');
+            step1.classList.remove('hidden-group');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        backButton2.addEventListener('click', function() {
+            step3.classList.add('hidden-group');
+            step2.classList.remove('hidden-group');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        backButton3.addEventListener('click', function() {
+            const planejamentoAlimentar = document.querySelector('input[name="Planejamento Alimentar"]:checked').value;
+            step4.classList.add('hidden-group');
+            if (planejamentoAlimentar === "Sim") {
+                step3.classList.remove('hidden-group');
+            } else {
+                step2.classList.remove('hidden-group');
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        });
 
-        // Função para voltar para a etapa anterior
-        function prevStep() {
-            document.getElementById('step' + currentStep).classList.add('hidden-group');
-            currentStep--;
-            document.getElementById('step' + currentStep).classList.remove('hidden-group');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Função para exibir a revisão dos dados
-        function showReview() {
-            const reviewContent = document.getElementById('reviewContent');
-            reviewContent.innerHTML = '';
-            const form = document.getElementById('multiStepForm');
+        submitButton.addEventListener('click', function(event) {
+            // Este é o único botão que envia o formulário, sem mais validações.
+            // A validação de campos obrigatórios já foi feita nas etapas anteriores.
             const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            
+            fetch(form.action, {
+                method: form.method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                showMessage('Seu primeiro passo para a transformação foi dado!<br>Formulário foi enviado com sucesso.', 'success');
+                form.reset();
+                step4.classList.add('hidden-group');
+                step1.classList.remove('hidden-group');
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                showMessage('Ocorreu um erro ao enviar o formulário. Por favor, tente novamente.', 'error');
+            });
+        });
 
-            // Adiciona um título para cada seção
-            const sections = {
-                'Nome Completo': 'Informações Pessoais',
-                'Cirurgia Últimos 12 Meses (Anaminese)': 'Histórico de Aptidão Física',
-                'Medicação Contínua (Nutricional)': 'Histórico de Saúde (Nutricional)',
-            };
-            let currentSection = '';
 
-            for (let [key, value] of formData.entries()) {
-                // Pula campos vazios ou não relevantes para a revisão, como a idade oculta
-                if (!value || key === 'Idade') {
-                    continue;
-                }
+        // Listeners de eventos
+        dataNascimentoInput.addEventListener('change', calculateAge);
+        dataInicioInput.addEventListener('change', togglePlanElements);
+        planejamentoAlimentarRadios.forEach(radio => radio.addEventListener('change', togglePlanElements));
 
-                // Verifica se é uma nova seção e adiciona o título
-                if (sections[key] && sections[key] !== currentSection) {
-                    const sectionTitle = document.createElement('h3');
-                    sectionTitle.className = 'text-lg font-bold text-gray-700 mb-2 mt-4';
-                    sectionTitle.textContent = sections[key];
-                    reviewContent.appendChild(sectionTitle);
-                    currentSection = sections[key];
-                } else if (!sections[key] && !currentSection.includes('Hábitos')) {
-                    const sectionTitle = document.createElement('h3');
-                    sectionTitle.className = 'text-lg font-bold text-gray-700 mb-2 mt-4';
-                    sectionTitle.textContent = 'Hábitos de Vida e Treino';
-                    reviewContent.appendChild(sectionTitle);
-                    currentSection = 'Hábitos de Vida e Treino';
-                }
+        // Novo listener para o rádio dos planos que atualiza apenas os detalhes
+        planoRadios.forEach(radio => radio.addEventListener('change', () => {
+            updatePlanDetails(radio.value);
+            togglePlanElements();
+            togglePaymentOptions();
+        }));
 
-                // Cria o parágrafo de exibição
-                const p = document.createElement('p');
-                p.innerHTML = `<strong>${key}:</strong> ${value}`;
-                reviewContent.appendChild(p);
+        frequenciaSelect.addEventListener('change', updatePlanDisplay);
+        formaPagamentoSelect.addEventListener('change', updatePlanDisplay);
+
+        // Autocompletar endereço com ViaCEP
+        cepInput.addEventListener('blur', () => {
+            const cep = cepInput.value.replace(/\D/g, '');
+            if (cep.length === 8) {
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!("erro" in data)) {
+                            ruaInput.value = data.logradouro;
+                            bairroInput.value = data.bairro;
+                            cidadeInput.value = data.localidade;
+                        } else {
+                            showMessage("CEP não encontrado.", 'error');
+                        }
+                    })
+                    .catch(() => {
+                        showMessage("Erro ao buscar o CEP.", 'error');
+                    });
             }
-        }
+        });
+
+        // Lógica de exibir/ocultar frequência para plano online
+        planoRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.value === "Online") {
+                    frequenciaContainer.classList.add('hidden-group');
+                } else {
+                    frequenciaContainer.classList.remove('hidden-group');
+                }
+            });
+        });
+
+        // Setup inicial dos campos condicionais da anamnese
+        setupConditionalFields();
+
     </script>
 </body>
 </html>
