@@ -101,7 +101,8 @@
         .button-highlight:hover {
             background-color: #059669;
         }
-        .price-display {
+        /* Classe de preço e aviso removida do uso ativo, mas mantida no CSS para estabilidade */
+        .price-display { 
             background-color: #e0f2fe;
             color: #0c4a6e;
             padding: 16px;
@@ -204,6 +205,9 @@
         .review-box hr {
             display: none;
         }
+        .parcelas-container {
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -212,8 +216,9 @@
         <div class="flex justify-center mb-6">
             <img src="https://raw.githubusercontent.com/wellingtonsouzapersonal/Formul-rio-de-Anaminese/main/WS%20LOGO%20MARCADA%CC%81GUA.png" alt="Logomarca Wellington Souza" class="logo" onerror="this.onerror=null; this.src='https://placehold.co/150x50/cccccc/333333?text=Logo+Não+Encontrada';">
         </div>
-        <form id="multiStepForm" action="https://formspree.io/f/meozeakg" method="POST" class="space-y-6">
-            
+        <!-- AÇÃO DO FORMULÁRIO APONTA PARA FORMSPREE -->
+        <!-- ADICIONADO novalidate para DESATIVAR a validação nativa do navegador -->
+        <form id="multiStepForm" action="https://formspree.io/f/xldpvlzo" method="POST" class="space-y-6" novalidate>
             <!-- Etapa 1: Formulário de Cadastro -->
             <div id="step1">
                 <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Formulário de Cadastro</h2>
@@ -243,11 +248,13 @@
                 <div class="form-group flex flex-col sm:flex-row sm:space-x-4">
                     <div class="w-full sm:w-1/2 mb-4 sm:mb-0">
                         <label for="altura">Altura (cm):</label>
-                        <input type="number" id="altura" name="Altura" min="50" max="300" placeholder="Ex: 175" required class="rounded-lg">
+                        <!-- REQUIRED REMOVIDO -->
+                        <input type="number" id="altura" name="Altura" min="50" max="300" placeholder="Ex: 175" class="rounded-lg">
                     </div>
                     <div class="w-full sm:w-1/2">
                         <label for="peso">Peso (kg):</label>
-                        <input type="number" id="peso" name="Peso" min="1" max="500" step="0.1" placeholder="Ex: 70.5" required class="rounded-lg">
+                        <!-- REQUIRED REMOVIDO -->
+                        <input type="number" id="peso" name="Peso" min="1" max="500" step="0.1" placeholder="Ex: 70.5" class="rounded-lg">
                     </div>
                 </div>
 
@@ -315,11 +322,13 @@
                         <input type="text" id="instagram" name="Instagram" placeholder="@seu_instagram" class="rounded-lg">
                     </div>
                 </div>
-
+                
+                <!-- AVISO DE VALORES REMOVIDO -->
                 <div class="w-full p-4 rounded-lg bg-blue-100 font-semibold text-center mt-6 border border-blue-300" style="color: #0c4a6e;">
-                    PREENCHA AS INFORMAÇÕES DO PLANO DESEJADO E TENHA OS VALORES ESTIMADOS!
+                    PREENCHA AS INFORMAÇÕES DO PLANO DESEJADO PARA AVANÇAR NO FORMULÁRIO.
                 </div>
 
+                <!-- CAMPOS MANTIDOS: Data de Início e Planejamento Alimentar -->
                 <div class="form-group flex flex-col sm:flex-row sm:space-x-4">
                     <div class="w-full sm:w-1/2 mb-4 sm:mb-0">
                         <label for="dataInicio">Data de início:</label>
@@ -333,17 +342,13 @@
                         </div>
                     </div>
                 </div>
-                
-                <div id="planWarningMessage" class="hidden p-4 rounded-lg text-yellow-700 bg-yellow-100 border border-yellow-200">
-                    Para prosseguirmos aos valores dos planos, por favor, preencha a **Data de início** e selecione se deseja ou não o **Planejamento alimentar**.
-                </div>
 
                 <div class="form-group">
                     <label>Escolha o seu Plano:</label>
                     <div class="radio-group flex flex-wrap gap-4 mt-2">
                         <label><input type="radio" name="Plano Escolhido" value="Trimestral Individual" required> Trimestral Individual</label>
                         <label><input type="radio" name="Plano Escolhido" value="Trimestral Compartilhado"> Trimestral Compartilhado</label>
-                        <label><input type="radio" name="Plano Escolhido" value="Semestral Individual"> Semestral Individual</label>
+                        <label><input type="radio" name="Plano Escolhido" value="Semestral Individual" required> Semestral Individual</label>
                         <label><input type="radio" name="Plano Escolhido" value="Semestral Compartilhado"> Semestral Compartilhado</label>
                         <label><input type="radio" name="Plano Escolhido" value="Trimestral Casal"> Trimestral Casal</label>
                         <label><input type="radio" name="Plano Escolhido" value="Semestral Casal"> Semestral Casal</label>
@@ -363,21 +368,15 @@
                     </select>
                 </div>
 
-                <div class="form-group">
-                    <label for="formaPagamento">Forma de pagamento:</label>
-                    <select id="formaPagamento" name="Forma de Pagamento" required class="rounded-lg">
-                        <option value="">Selecione uma opção</option>
-                        <option value="Dinheiro">Dinheiro (0,00%)</option>
-                        <option value="Pix">Pix (0,00%)</option>
-                        <option value="Debito">Débito (1,99%)</option>
-                        <option value="CreditoAVista">Crédito (à vista - 4,98%)</option>
-                        <option value="Boleto">Boleto (acréscimo R$5,00 por boleto)</option>
-                    </select>
-                </div>
+                <!-- CAMPO FORMA DE PAGAMENTO REMOVIDO -->
+                <input type="hidden" id="formaPagamento" name="Forma de Pagamento" value="Não Aplicável - Sem Valores">
 
-                <div class="form-group">
-                    <div id="valorEstimado" class="price-display hidden-group"></div>
-                    <input type="hidden" id="valorEstimadoHidden" name="Valor Estimado">
+                <!-- DISPLAY DE VALOR ESTIMADO REMOVIDO -->
+                <input type="hidden" id="valorEstimadoHidden" name="Valor Estimado" value="Não Aplicável - Valores Removidos">
+                
+                <!-- Notificação de campos faltando REMOVIDA, pois não há mais valores -->
+                <div id="planWarningMessage" class="hidden-group p-4 rounded-lg text-yellow-700 bg-yellow-100 border border-yellow-200">
+                    <!-- Conteúdo removido -->
                 </div>
 
                 <p class="motivational-phrase">Mudar não é fácil, mas quando você nota os resultados, nada te faz parar.</p>
@@ -505,6 +504,9 @@
                         <label><input type="radio" name="qualidadeSono" value="Regular"> Regular</label>
                         <label><input type="radio" name="qualidadeSono" value="Ruim"> Ruim</label>
                     </div>
+                    <!-- NOVO CAMPO: Quantas horas de sono -->
+                    <label for="horasSono" class="mt-4">Quantas horas de sono por noite (média):</label>
+                    <input type="number" id="horasSono" name="Horas de Sono" min="0" max="24" step="0.5" placeholder="Ex: 7.5" required class="rounded-lg">
                 </div>
 
                 <!-- Seção: Objetivos e Expectativas -->
@@ -541,7 +543,7 @@
                 </div>
             </div>
 
-            <!-- Etapa 3: Formulário Nutricional -->
+            <!-- Etapa 3: Formulário Nutricional (Será a nova Etapa 2.5, mas manteremos o ID 3) -->
             <div id="step3" class="hidden-group">
                 <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Formulário Nutricional</h2>
                 
@@ -578,6 +580,18 @@
                 <!-- Seção: Hábitos Alimentares -->
                 <div class="section-title">Hábitos Alimentares</div>
                 <hr class="mb-6">
+                
+                <!-- NOVOS CAMPOS DE PREFERÊNCIA ALIMENTAR -->
+                <div class="form-group">
+                    <label for="alimentosGosta">Alimentos que mais gosta (para inclusão no plano):</label>
+                    <textarea id="alimentosGosta" name="Alimentos que mais gosta" class="rounded-lg" placeholder="Ex: Frango, batata-doce, brócolis, manga"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="alimentosNaoGosta">Alimentos que NÃO gosta (para exclusão no plano):</label>
+                    <textarea id="alimentosNaoGosta" name="Alimentos que NÃO gosta" class="rounded-lg" placeholder="Ex: Peixe, quiabo, pimentão"></textarea>
+                </div>
+                
                 <div class="form-group">
                     <label>Você pula alguma refeição principal (café da manhã, almoço, jantar)?</label>
                     <div class="radio-group flex mt-2">
@@ -619,7 +633,7 @@
                 </div>
             </div>
 
-            <!-- Etapa 4: Revisão e Confirmação -->
+            <!-- Etapa 4: Revisão e Confirmação (Será a nova Etapa 3) -->
             <div id="step4" class="hidden-group">
                 <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Revisão e Confirmação</h2>
                 
@@ -631,6 +645,7 @@
                 
                 <p class="motivational-phrase">Seu corpo é capaz de tudo, é sua mente que você precisa convencer.</p>
 
+                <!-- Este botão fará o submit POST padrão para o Formspree -->
                 <div class="flex justify-between mt-8 space-x-4">
                     <button id="backButton3" type="button" class="w-1/2 bg-gray-300 text-gray-800 font-bold hover:bg-gray-400">Voltar</button>
                     <button id="submitButton" type="submit" class="w-1/2 button-highlight">Enviar Formulário</button>
@@ -652,247 +667,47 @@
     </div>
 
     <script>
-        const form = document.getElementById('multiStepForm');
-        const step1 = document.getElementById('step1');
-        const step2 = document.getElementById('step2');
-        const step3 = document.getElementById('step3');
-        const step4 = document.getElementById('step4');
-        const nextButton1 = document.getElementById('nextButton1');
-        const nextButton2 = document.getElementById('nextButton2');
-        const nextButton3 = document.getElementById('nextButton3');
-        const backButton1 = document.getElementById('backButton1');
-        const backButton2 = document.getElementById('backButton2');
-        const backButton3 = document.getElementById('backButton3');
-        const submitButton = document.getElementById('submitButton');
-        const dataNascimentoInput = document.getElementById('dataNascimento');
-        const idadeInput = document.getElementById('idade');
-        const cepInput = document.getElementById('cep');
-        const ruaInput = document.getElementById('rua');
-        const bairroInput = document.getElementById('bairro');
-        const cidadeInput = document.getElementById('cidade');
-        const dataInicioInput = document.getElementById('dataInicio');
-        const planejamentoAlimentarRadios = document.querySelectorAll('input[name="Planejamento Alimentar"]');
-        const planWarningMessage = document.getElementById('planWarningMessage');
-        const planDetailsDisplay = document.getElementById('planDetailsDisplay');
-        const valorEstimadoDisplay = document.getElementById('valorEstimado');
-        const valorEstimadoHidden = document.getElementById('valorEstimadoHidden');
-        const planoRadios = document.querySelectorAll('input[name="Plano Escolhido"]');
-        const frequenciaContainer = document.getElementById('frequenciaContainer');
-        const frequenciaSelect = document.getElementById('frequenciaSemana');
-        const formaPagamentoSelect = document.getElementById('formaPagamento');
-        const reviewDataContainer = document.querySelector('.review-data');
-        const creditoParceladoOption = document.querySelector('option[value="CreditoParcelado"]');
-
-        // New function to display a custom message box
-        function showMessage(message, type = 'info') {
-            const messageBox = document.getElementById('custom-message-box');
-            const messageTitle = document.getElementById('message-title');
-            const messageContent = document.getElementById('message-content');
-            const okButton = document.getElementById('message-ok-button');
-
-            messageContent.innerHTML = message;
-            messageBox.classList.remove('hidden');
-
-            // Set title and colors based on type
-            switch (type) {
-                case 'success':
-                    messageTitle.innerText = 'Sucesso';
-                    messageTitle.classList.add('text-green-600');
-                    break;
-                case 'error':
-                    messageTitle.innerText = 'Erro!';
-                    messageTitle.classList.add('text-red-600');
-                    break;
-                case 'info':
-                default:
-                    messageTitle.innerText = 'Informação';
-                    messageTitle.classList.add('text-blue-600');
-                    break;
-            }
-
-            okButton.onclick = () => {
-                messageBox.classList.add('hidden');
-                messageTitle.classList.remove('text-green-600', 'text-red-600', 'text-blue-600');
-            };
-        }
-
-        // Valores e regras
-        const planData = {
-            "Trimestral Individual": { description: "Plano 3 meses – treino presencial\nHorário exclusivo\nTreinos via app com vídeos ilustrativos e/ou PDF\nDuas avaliações físicas", prices: { 2: 400.00, 3: 450.00, 4: 550.00, 5: 650.00 }, duration: 3 },
-            "Trimestral Compartilhado": { description: "Plano 3 meses – treino presencial\nDependendo da demanda do personal, horário poderá ser compartilhado com outro aluno.\nTreinos via app com vídeos ilustrativos e/ou PDF\nDuas avaliações físicas", prices: { 2: 350.00, 3: 390.00, 4: 480.00, 5: 580.00 }, duration: 3 },
-            "Semestral Individual": { description: "Plano 6 meses – treino presencial\nHorário exclusivo\nTreinos via app com vídeos ilustrativos e/ou PDF\nDuas avaliações físicas", prices: { 2: 370.00, 3: 420.00, 4: 500.00, 5: 600.00 }, duration: 6 },
-            "Semestral Compartilhado": { description: "Plano 6 meses – treino presencial\nDependendo da demanda do personal, horário poderá ser compartilhado com outro aluno.\nTreinos via app com vídeos ilustrativos e/ou PDF\nDuas avaliações físicas", prices: { 2: 320.00, 3: 360.00, 4: 460.00, 5: 560.00 }, duration: 6 },
-            "Trimestral Casal": { description: "Plano 3 meses – treino presencial\nAtendimento deverá ser executado no mesmo horário, para qualquer alteração, favor verificar disponibilidade do personal.\nTreinos via app com vídeos ilustrativos e/ou PDF\nDuas avaliações físicas", prices: { 2: 640.00, 3: 740.00, 4: 880.00, 5: 1080.00 }, duration: 3 },
-            "Semestral Casal": { description: "Plano 6 meses – treino presencial\nAtendimento deverá ser executado no mesmo horário, para qualquer alteração, favor verificar disponibilidade do personal.\nTreinos via app com vídeos ilustrativos e/ou PDF\nDuas avaliações físicas", prices: { 2: 560.00, 3: 600.00, 4: 840.00, 5: 1040.00 }, duration: 6 },
-            "Online": { description: "Plano totalmente online\nAcesso a treinos personalizados via app com vídeos ilustrativos e/ou PDF\nAcompanhamento e suporte via WhatsApp.", price: 160.00, duration: 1 }
-        };
-
-        const MEAL_PLAN_COST = 150.00;
-        const TAX_RATES = {
-            "Dinheiro": 0.0,
-            "Pix": 0.0,
-            "Debito": 0.0199,
-            "CreditoAVista": 0.0498,
-            "Boleto": 5.00
-        };
-
-        // Funções
-        function calculateAge() {
-            const birthDate = new Date(dataNascimentoInput.value);
-            const today = new Date();
-            let age = today.getFullYear() - birthDate.getFullYear();
-            const monthDifference = today.getMonth() - birthDate.getMonth();
-            if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
-                age--;
-            }
-            idadeInput.value = age > 0 ? `${age} anos` : '';
-            updatePlanDisplay();
-        }
-
-        function togglePlanElements() {
-            const hasDataInicio = dataInicioInput.value !== '';
-            const hasPlanoAlimentar = document.querySelector('input[name="Planejamento Alimentar"]:checked') !== null;
-            const selectedPlano = document.querySelector('input[name="Plano Escolhido"]:checked');
-
-            if (selectedPlano && hasDataInicio && hasPlanoAlimentar) {
-                planWarningMessage.classList.add('hidden');
-                valorEstimadoDisplay.classList.remove('hidden-group');
-                updatePlanDisplay();
-            } else {
-                planWarningMessage.classList.remove('hidden');
-                valorEstimadoDisplay.classList.add('hidden-group');
-            }
-        }
-
-        function updatePlanDetails(selectedPlanoValue) {
-            const planoDetalhes = planData[selectedPlanoValue];
-            if (!planoDetalhes) {
-                planDetailsDisplay.classList.add('hidden-group');
-                return;
-            }
-
-            let detailsHtml = '';
-            detailsHtml += `<strong>Detalhes do Plano:</strong><ul>`;
-            const descriptionLines = planoDetalhes.description.split('\n');
-            descriptionLines.forEach(line => {
-                detailsHtml += `<li>${line}</li>`;
-            });
-            detailsHtml += `</ul>`;
-            planDetailsDisplay.innerHTML = detailsHtml;
-            planDetailsDisplay.classList.remove('hidden-group');
-        }
-
-        function updatePlanDisplay() {
-            const selectedPlano = document.querySelector('input[name="Plano Escolhido"]:checked');
-            const planejamentoAlimentar = document.querySelector('input[name="Planejamento Alimentar"]:checked');
-            const selectedFrequencia = frequenciaSelect.value;
-            const formaPagamento = formaPagamentoSelect.value;
-
-            if (!selectedPlano || !planejamentoAlimentar || !formaPagamento) {
-                valorEstimadoDisplay.classList.add('hidden-group');
-                return;
-            }
-            
-            const planoDetalhes = planData[selectedPlano.value];
-            let monthlyPrice;
-            let totalPlanPriceWithoutInterest;
-
-            if (selectedPlano.value === "Online") {
-                monthlyPrice = planoDetalhes.price;
-                frequenciaContainer.classList.add('hidden-group');
-            } else {
-                if (!selectedFrequencia) {
-                    valorEstimadoDisplay.classList.add('hidden-group');
-                    return;
-                }
-                monthlyPrice = planoDetalhes.prices[selectedFrequencia];
-                frequenciaContainer.classList.remove('hidden-group');
-            }
-
-            if (planejamentoAlimentar.value === "Sim") {
-                monthlyPrice += MEAL_PLAN_COST;
-            }
-
-            totalPlanPriceWithoutInterest = monthlyPrice * planoDetalhes.duration;
-
-            let finalPriceText = '';
-
-            // Lógica de cálculo dos valores
-            switch (formaPagamento) {
-                case 'Dinheiro':
-                case 'Pix':
-                case 'Debito':
-                case 'CreditoAVista':
-                    const taxRate = TAX_RATES[formaPagamento];
-                    const finalPrice = totalPlanPriceWithoutInterest * (1 + taxRate);
-                    const finalMonthlyPrice = monthlyPrice * (1 + taxRate);
-                    finalPriceText = `
-                        <p class="mb-1"><strong>Valor Mensal Estimado:</strong> R$ ${finalMonthlyPrice.toFixed(2).replace('.', ',')}</p>
-                        <p><strong>Valor Total do Plano:</strong> R$ ${finalPrice.toFixed(2).replace('.', ',')}</p>
-                    `;
-                    break;
-                case 'Boleto':
-                    const finalPriceBoleto = totalPlanPriceWithoutInterest + (planoDetalhes.duration * TAX_RATES["Boleto"]);
-                    finalPriceText = `
-                        <p class="mb-1"><strong>Valor Mensal Estimado:</strong> R$ ${monthlyPrice.toFixed(2).replace('.', ',')}</p>
-                        <p><strong>Valor Total do Plano:</strong> R$ ${finalPriceBoleto.toFixed(2).replace('.', ',')}</p>
-                    `;
-                    break;
-                default:
-                    valorEstimadoDisplay.classList.add('hidden-group');
-                    return;
-            }
-
-            valorEstimadoDisplay.innerHTML = finalPriceText;
-            valorEstimadoHidden.value = valorEstimadoDisplay.innerText;
-            valorEstimadoDisplay.classList.remove('hidden-group');
-        }
-        
-        // Lógica para mostrar/esconder campos extras da anamnese e nutricional
-        const conditionalFields = {
-            'cirurgia': 'cirurgia-obs',
-            'coluna': 'coluna-obs',
-            'articulacoes': 'articulacoes-obs',
-            'lesao': 'lesao-obs',
-            'restricaoMedica': 'restricaoMedica-obs',
-            'fuma': 'fuma-frequencia',
-            'alcool': 'alcool-frequencia',
-            'atividadeFisica': 'atividadeFisica-obs',
-            'medicacao': 'medicacao-obs',
-            'doencaCronica': 'doencaCronica-obs',
-            'alergiaAlimentar': 'alergiaAlimentar-obs',
-            'pulaRefeicao': 'pulaRefeicao-obs',
-            'frutasVegetais': 'frutasVegetais-obs',
-            'consumoFastFood': 'consumoFastFood-obs'
-        };
-
+        /**
+         * Lógica para mostrar/esconder campos extras da anamnese e nutricional (campos condicionais).
+         */
         function setupConditionalFields() {
+            const conditionalFields = {
+                'cirurgia': 'cirurgia-obs', 'coluna': 'coluna-obs', 'articulacoes': 'articulacoes-obs',
+                'lesao': 'lesao-obs', 'restricaoMedica': 'restricaoMedica-obs', 'fuma': 'fuma-frequencia',
+                'alcool': 'alcool-frequencia', 'atividadeFisica': 'atividadeFisica-obs',
+                'medicacao': 'medicacao-obs', 'doencaCronica': 'doencaCronica-obs',
+                'alergiaAlimentar': 'alergiaAlimentar-obs', 'pulaRefeicao': 'pulaRefeicao-obs',
+                'frutasVegetais': 'frutasVegetais-obs', 'consumoFastFood': 'consumoFastFood-obs'
+            };
+            
             for (const name in conditionalFields) {
                 const radios = document.querySelectorAll(`input[name="${name}"]`);
                 const targetElement = document.getElementById(conditionalFields[name]);
-
+    
                 if (radios && targetElement) {
                     radios.forEach(radio => {
                         radio.addEventListener('change', (event) => {
-                            if (event.target.value === 'Sim' || event.target.name === 'consumoFastFood') {
+                            const shouldShow = event.target.value === 'Sim' || event.target.value === 'Muito Frequente' || event.target.value === 'Ocasional';
+                            
+                            if (shouldShow) {
                                 targetElement.classList.remove('hidden-group');
-                                // Adiciona 'required' ao campo de texto/textarea quando visível
+                                // Já que novalidate está em uso, vamos reativar required aqui
                                 if (targetElement.tagName === 'TEXTAREA' || targetElement.tagName === 'INPUT') {
                                     targetElement.setAttribute('required', '');
                                 } else {
-                                    // Para grupos de radio, faz os inputs internos obrigatórios
                                     targetElement.querySelectorAll('input').forEach(input => input.setAttribute('required', ''));
                                 }
                             } else {
                                 targetElement.classList.add('hidden-group');
-                                // Remove 'required' quando o campo não está visível
+                                // Remover required e limpar campo quando não é relevante
                                 if (targetElement.tagName === 'TEXTAREA' || targetElement.tagName === 'INPUT') {
                                     targetElement.removeAttribute('required');
-                                    targetElement.value = ''; // Limpa o valor
+                                    targetElement.value = '';
                                 } else {
-                                    targetElement.querySelectorAll('input').forEach(input => input.removeAttribute('required'));
-                                    // Desmarca os rádios internos para evitar conflitos
-                                    targetElement.querySelectorAll('input:checked').forEach(input => input.checked = false);
+                                    targetElement.querySelectorAll('input').forEach(input => {
+                                        input.removeAttribute('required');
+                                        input.checked = false;
+                                    });
                                 }
                             }
                         });
@@ -900,265 +715,304 @@
                 }
             }
         }
-
-        function populateReviewPage() {
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
-            
-            reviewDataContainer.innerHTML = '';
-
-            // Box para Informações Pessoais e do Plano
-            let personalAndPlanHtml = '';
-            for (const [key, value] of Object.entries(data)) {
-                if (key !== 'valorEstimado' && key !== 'objetivo' && !key.includes('Observação') && !key.includes('frequencia') && !key.includes('Pratica atividade') && value.trim() !== '') {
-                    personalAndPlanHtml += `<p><strong>${key}:</strong> ${value}</p>`;
-                }
-            }
-            const personalBox = document.createElement('div');
-            personalBox.className = 'review-box';
-            personalBox.innerHTML = '<div class="section-title">Informações Pessoais e do Plano</div><hr class="mb-4">' + personalAndPlanHtml;
-            reviewDataContainer.appendChild(personalBox);
-
-            // Box para Informações de Anamnese
-            let anamneseHtml = '';
-            for (const [key, value] of Object.entries(data)) {
-                if ((key.includes('Observação') || key.includes('frequencia') || key.includes('Pratica atividade') || key.includes('nivelMusculacao') || key.includes('personalTrainer') || key.includes('qualidadeSono') || key.includes('resultadoEsperado') || key.includes('informacoesAdicionais')) && value.trim() !== '') {
-                    anamneseHtml += `<p><strong>${key}:</strong> ${value}</p>`;
-                }
-            }
-            const objetivos = formData.getAll('objetivo');
-            if (objetivos.length > 0) {
-                 anamneseHtml += `<p><strong>Objetivos:</strong> ${objetivos.join(', ')}</p>`;
-            }
-            if (anamneseHtml !== '') {
-                const anamneseBox = document.createElement('div');
-                anamneseBox.className = 'review-box';
-                anamneseBox.innerHTML = '<div class="section-title">Informações de Anamnese</div><hr class="mb-4">' + anamneseHtml;
-                reviewDataContainer.appendChild(anamneseBox);
-            }
-            
-
-            // Box para Informações Nutricionais, se houver
-            const planejamentoAlimentar = document.querySelector('input[name="Planejamento Alimentar"]:checked');
-            if (planejamentoAlimentar && planejamentoAlimentar.value === "Sim") {
-                let nutricionalHtml = '';
-                 for (const [key, value] of Object.entries(data)) {
-                    if ((key.includes('Medicação') || key.includes('Doença') || key.includes('Alergia') || key.includes('Pula') || key.includes('Frutas') || key.includes('Água') || key.includes('Fast')) && value.trim() !== '') {
-                        nutricionalHtml += `<p><strong>${key}:</strong> ${value}</p>`;
-                    }
-                }
-                if (nutricionalHtml !== '') {
-                    const nutricionalBox = document.createElement('div');
-                    nutricionalBox.className = 'review-box';
-                    nutricionalBox.innerHTML = '<div class="section-title">Informações Nutricionais</div><hr class="mb-4">' + nutricionalHtml;
-                    reviewDataContainer.appendChild(nutricionalBox);
-                }
-            }
-        }
         
-        // Listener para a navegação
-        nextButton1.addEventListener('click', function() {
-            const requiredFields = document.querySelectorAll('#step1 [required]');
-            let missingFields = [];
-            const selectedPlano = document.querySelector('input[name="Plano Escolhido"]:checked');
-            const isOnlinePlan = selectedPlano && selectedPlano.value === "Online";
+        // Removemos toggleRequired, pois a validação agora é 100% programática
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // Seletores de Elementos DOM
+            const form = document.getElementById('multiStepForm');
+            const step1 = document.getElementById('step1');
+            const step2 = document.getElementById('step2');
+            const step3 = document.getElementById('step3'); 
+            const step4 = document.getElementById('step4'); 
+            const nextButton1 = document.getElementById('nextButton1');
+            const nextButton2 = document.getElementById('nextButton2');
+            const nextButton3 = document.getElementById('nextButton3');
+            const backButton1 = document.getElementById('backButton1');
+            const backButton2 = document.getElementById('backButton2');
+            const backButton3 = document.getElementById('backButton3');
+            const dataNascimentoInput = document.getElementById('dataNascimento');
+            const idadeInput = document.getElementById('idade');
+            const cepInput = document.getElementById('cep');
             
-            requiredFields.forEach(field => {
-                // Se o campo de frequência e o plano online estiverem selecionados, ignora a validação.
-                if (field.id === 'frequenciaSemana' && isOnlinePlan) {
+            // CAMPOS MANTIDOS: Data de Início e Planejamento Alimentar
+            const dataInicioInput = document.getElementById('dataInicio');
+            const planejamentoAlimentarRadios = document.querySelectorAll('input[name="Planejamento Alimentar"]');
+            
+            const planDetailsDisplay = document.getElementById('planDetailsDisplay');
+            const planoRadios = document.querySelectorAll('input[name="Plano Escolhido"]');
+            const frequenciaContainer = document.getElementById('frequenciaContainer');
+            const frequenciaSelect = document.getElementById('frequenciaSemana');
+            const reviewDataContainer = document.querySelector('.review-data');
+            const submitButton = document.getElementById('submitButton'); 
+            
+            // Variáveis de preço e pagamento removidas, mas mantendo a estrutura de dados para as descrições
+            const planData = {
+                "Trimestral Individual": { description: "Plano 3 meses – treino presencial\nHorário exclusivo\nTreinos via app com vídeos ilustrativos e/ou PDF\nDuas avaliações físicas\nSuporte Online" },
+                "Trimestral Compartilhado": { description: "Plano 3 meses – treino presencial\nDependendo da demanda do personal, horário poderá ser compartilhado com outro aluno.\nTreinos via app com vídeos ilustrativos e/ou PDF\nDuas avaliações físicas\nSuporte Online" },
+                "Semestral Individual": { description: "Plano 6 meses – treino presencial\nHorário exclusivo\nTreinos via app com vídeos ilustrativos e/ou PDF\nDuas avaliações físicas\nSuporte Online" },
+                "Semestral Compartilhado": { description: "Plano 6 meses – treino presencial\nDependendo da demanda do personal, horário poderá ser compartilhado com outro aluno.\nTreinos via app com vídeos ilustrativos e/ou PDF\nDuas avaliações físicas\nSuporte Online" },
+                "Trimestral Casal": { description: "Plano 3 meses – treino presencial\nAtendimento deverá ser executado no mesmo horário.\nTreinos via app com vídeos ilustrativos e/ou PDF\nDuas avaliações físicas\nSuporte Online\nObservação: Treinos no mesmo horário" },
+                "Semestral Casal": { description: "Plano 6 meses – treino presencial\nAtendimento deverá ser executado no mesmo horário.\nTreinos via app com vídeos ilustrativos e/ou PDF\nDuas avaliações físicas\nSuporte Online\nObservação: Treinos no mesmo horário" },
+                "Online": { description: "Plano totalmente online\n1 Treino presencial - mês\nAvaliação física Mensal\nApp para treino com exemplos de execução dos exercícios\nTreinos em PDF\nSuporte online 7 dias semana" }
+            };
+            
+            // Calcula a idade com base na data de nascimento
+            function calculateAge() {
+                const birthDate = new Date(dataNascimentoInput.value);
+                const today = new Date();
+                let age = today.getFullYear() - birthDate.getFullYear();
+                const monthDifference = today.getMonth() - birthDate.getMonth();
+                if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                idadeInput.value = age > 0 ? `${age} anos` : '';
+            }
+            
+            // Apenas atualiza a descrição do plano
+            function updatePlanDetails(selectedPlanoValue) {
+                const planoDetalhes = planData[selectedPlanoValue];
+                if (!planoDetalhes) {
+                    planDetailsDisplay.classList.add('hidden-group');
                     return;
                 }
                 
-                if (field.type === 'radio' && !document.querySelector(`input[name="${field.name}"]:checked`)) {
-                    if (!missingFields.includes(field.name)) {
-                        missingFields.push(field.name);
-                    }
-                } else if (field.value.trim() === '') {
-                    missingFields.push(field.id || field.name);
-                }
-            });
-
-            if (missingFields.length > 0) {
-                const friendlyNames = {
-                    'nomeCompleto': 'Nome Completo', 'cpf': 'CPF', 'dataNascimento': 'Data de Nascimento', 'altura': 'Altura', 'peso': 'Peso',
-                    'Genero': 'Gênero', 'profissao': 'Profissão', 'telefoneContato': 'Telefone de Contato', 'contatoEmergencia': 'Contato de Emergência',
-                    'rua': 'Rua', 'numeroCasa': 'Número da Casa', 'bairro': 'Bairro', 'cidade': 'Cidade', 'email': 'E-mail',
-                    'dataInicio': 'Data de Início', 'Planejamento Alimentar': 'Planejamento Alimentar',
-                    'Plano Escolhido': 'Plano Escolhido', 'frequenciaSemana': 'Frequência Semanal', 'formaPagamento': 'Forma de Pagamento'
-                };
-                const formattedMissing = missingFields.map(field => friendlyNames[field] || field).join(', ');
-                showMessage(`Por favor, preencha os seguintes campos obrigatórios: ${formattedMissing}`, 'error');
-            } else {
-                step1.classList.add('hidden-group');
-                step2.classList.remove('hidden-group');
-                // Rola para o topo da próxima seção
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                let detailsHtml = '';
+                detailsHtml += `<strong>Detalhes do Plano:</strong><ul>`;
+                const descriptionLines = planoDetalhes.description.split('\n');
+                descriptionLines.forEach(line => {
+                    detailsHtml += `<li>${line}</li>`;
+                });
+                detailsHtml += `</ul>`;
+                planDetailsDisplay.innerHTML = detailsHtml;
+                planDetailsDisplay.classList.remove('hidden-group');
             }
-        });
 
-        nextButton2.addEventListener('click', function() {
-            const requiredFields = document.querySelectorAll('#step2 [required]');
-            let missingFields = [];
-            const planejamentoAlimentar = document.querySelector('input[name="Planejamento Alimentar"]:checked').value;
-
-            requiredFields.forEach(field => {
-                if (field.type === 'radio' && !document.querySelector(`input[name="${field.name}"]:checked`)) {
-                    if (!missingFields.includes(field.name)) {
-                        missingFields.push(field.name);
-                    }
-                } else if (field.value.trim() === '') {
-                    missingFields.push(field.id || field.name);
-                }
-            });
-
-            if (missingFields.length > 0) {
-                const friendlyNames = {
-                    'cirurgia': 'Cirurgia', 'coluna': 'Problemas de Coluna', 'articulacoes': 'Problemas nas Articulações', 'lesao': 'Lesão Grave', 'restricaoMedica': 'Restrição Médica',
-                    'fuma': 'Fuma?', 'fuma-frequencia': 'Frequência do Hábito de Fumar',
-                    'alcool': 'Ingere bebida alcoólica?', 'alcool-frequencia': 'Frequência do Consumo de Álcool',
-                    'atividadeFisica': 'Atividade Física', 'atividadeFisica-obs': 'Detalhes da Atividade Física',
-                    'nivelMusculacao': 'Nível de Experiência com Musculação', 'personalTrainer': 'Treinou com Personal Trainer', 'qualidadeSono': 'Qualidade do Sono'
+            // A função de mostrar mensagem foi mantida
+            function showMessage(message, type = 'info') {
+                const messageBox = document.getElementById('custom-message-box');
+                const messageTitle = document.getElementById('message-title');
+                const messageContent = document.getElementById('message-content');
+                const okButton = document.getElementById('message-ok-button');
+                
+                messageContent.innerHTML = message;
+                messageBox.classList.remove('hidden');
+                
+                messageTitle.innerText = type === 'error' ? 'Erro!' : (type === 'success' ? 'Sucesso!' : 'Informação');
+                messageTitle.classList.remove('text-red-600', 'text-blue-600', 'text-green-600');
+                messageTitle.classList.add(type === 'error' ? 'text-red-600' : (type === 'success' ? 'text-green-600' : 'text-blue-600'));
+                
+                okButton.onclick = () => {
+                    messageBox.classList.add('hidden');
                 };
-                const formattedMissing = missingFields.map(field => friendlyNames[field] || field).join(', ');
-                showMessage(`Por favor, preencha os seguintes campos obrigatórios: ${formattedMissing}`, 'error');
-            } else {
-                 if (planejamentoAlimentar === "Sim") {
-                    step2.classList.add('hidden-group');
-                    step3.classList.remove('hidden-group');
-                 } else {
-                    populateReviewPage();
-                    step2.classList.add('hidden-group');
-                    step4.classList.remove('hidden-group');
-                 }
-                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
-        });
 
-        nextButton3.addEventListener('click', function() {
-            const requiredFields = document.querySelectorAll('#step3 [required]');
-            let missingFields = [];
-            requiredFields.forEach(field => {
-                 if (field.type === 'radio' && !document.querySelector(`input[name="${field.name}"]:checked`)) {
-                    if (!missingFields.includes(field.name)) {
-                        missingFields.push(field.name);
-                    }
-                } else if (field.value.trim() === '') {
-                    missingFields.push(field.id || field.name);
-                }
-            });
-
-             if (missingFields.length > 0) {
-                const friendlyNames = {
-                    'medicacao': 'Medicação', 'doencaCronica': 'Doença Crônica', 'alergiaAlimentar': 'Alergia Alimentar',
-                    'pulaRefeicao': 'Pula Refeição', 'frutasVegetais': 'Frutas e Vegetais', 'quantidadeAgua': 'Quantidade de Água', 'consumoFastFood': 'Consumo de Fast Food'
-                };
-                const formattedMissing = missingFields.map(field => friendlyNames[field] || field).join(', ');
-                showMessage(`Por favor, preencha os seguintes campos obrigatórios: ${formattedMissing}`, 'error');
-             } else {
-                populateReviewPage();
-                step3.classList.add('hidden-group');
-                step4.classList.remove('hidden-group');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-             }
-        });
-
-        backButton1.addEventListener('click', function() {
-            step2.classList.add('hidden-group');
-            step1.classList.remove('hidden-group');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+            // Popula a página de revisão (removendo as referências a valores/pagamento)
+            function populateReviewPage() {
+                const form = document.getElementById('multiStepForm');
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+                
+                reviewDataContainer.innerHTML = '';
         
-        backButton2.addEventListener('click', function() {
-            step3.classList.add('hidden-group');
-            step2.classList.remove('hidden-group');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+                const boxes = {
+                    'Informações Pessoais e do Plano': ['Nome Completo', 'CPF', 'Data de Nascimento', 'Idade', 'Altura', 'Peso', 'Genero', 'Profissão', 'Telefone de Contato', 'Contato de Emergência', 'CEP', 'Rua', 'Número da Casa', 'Bairro', 'Cidade', 'E-mail', 'Instagram', 'Data de Início', 'Planejamento Alimentar', 'Plano Escolhido', 'Frequência Semanal'], 
+                    'Informações de Anamnese': ['Cirurgia Observação', 'Coluna Observação', 'Articulações Observação', 'Lesão Observação', 'Restrição Médica Observação', 'fuma', 'fuma-frequencia', 'alcool', 'alcool-frequencia', 'atividadeFisica', 'Atividade Física Observação', 'nivelMusculacao', 'personalTrainer', 'qualidadeSono', 'Horas de Sono', 'objetivo', 'resultadoEsperado', 'informacoesAdicionais'],
+                    'Informações Nutricionais': ['Medicação contínua - Observação', 'Doença Crônica - Observação', 'Alergia Alimentar - Observação', 'Alimentos que mais gosta', 'Alimentos que NÃO gosta', 'Pula Refeição - Observação', 'Frutas e Vegetais - Observação', 'Quantidade de Água', 'Consumo de fast food, doces e ultraprocessados - Observação']
+                };
 
-        backButton3.addEventListener('click', function() {
-            const planejamentoAlimentar = document.querySelector('input[name="Planejamento Alimentar"]:checked').value;
-            step4.classList.add('hidden-group');
-            if (planejamentoAlimentar === "Sim") {
-                step3.classList.remove('hidden-group');
-            } else {
-                step2.classList.remove('hidden-group');
-            }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        submitButton.addEventListener('click', function(event) {
-            // Este é o único botão que envia o formulário, sem mais validações.
-            // A validação de campos obrigatórios já foi feita nas etapas anteriores.
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
-            
-            fetch(form.action, {
-                method: form.method,
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(result => {
-                showMessage('Seu primeiro passo para a transformação foi dado!<br>Formulário foi enviado com sucesso.', 'success');
-                form.reset();
-                step4.classList.add('hidden-group');
-                step1.classList.remove('hidden-group');
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-                showMessage('Ocorreu um erro ao enviar o formulário. Por favor, tente novamente.', 'error');
-            });
-        });
-
-
-        // Listeners de eventos
-        dataNascimentoInput.addEventListener('change', calculateAge);
-        dataInicioInput.addEventListener('change', togglePlanElements);
-        planejamentoAlimentarRadios.forEach(radio => radio.addEventListener('change', togglePlanElements));
-
-        // Novo listener para o rádio dos planos que atualiza apenas os detalhes
-        planoRadios.forEach(radio => radio.addEventListener('change', () => {
-            updatePlanDetails(radio.value);
-            togglePlanElements();
-        }));
-
-        frequenciaSelect.addEventListener('change', updatePlanDisplay);
-        formaPagamentoSelect.addEventListener('change', updatePlanDisplay);
-
-        // Autocompletar endereço com ViaCEP
-        cepInput.addEventListener('blur', () => {
-            const cep = cepInput.value.replace(/\D/g, '');
-            if (cep.length === 8) {
-                fetch(`https://viacep.com.br/ws/${cep}/json/`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (!("erro" in data)) {
-                            ruaInput.value = data.logradouro;
-                            bairroInput.value = data.bairro;
-                            cidadeInput.value = data.localidade;
+                for (const key in data) {
+                    if (key.endsWith('Observação') && data[key].toLowerCase() === 'não') {
+                        delete data[key];
+                    }
+                }
+        
+                for (const title in boxes) {
+                    let html = '';
+                    boxes[title].forEach(key => {
+                        let value;
+                        if (key === 'objetivo') {
+                            value = formData.getAll('objetivo').join(', ');
                         } else {
-                            showMessage("CEP não encontrado.", 'error');
+                            // Correção para mapear dados corretamente a partir de formData
+                            value = data[key];
                         }
-                    })
-                    .catch(() => {
-                        showMessage("Erro ao buscar o CEP.", 'error');
+                        
+                        // Garante que campos de plano/valor removidos na Etapa 1 não apareçam na Revisão
+                        if (value && value.trim() !== '' && value !== 'Não Aplicável - Valores Removidos' && value !== 'Não Aplicável - Sem Valores') {
+                            // Mapeamento de chaves
+                            const friendlyKey = key
+                                .replace(/([A-Z])/g, ' $1') 
+                                .replace(/E-mail/, 'E-mail')
+                                .replace(/CPF/, 'CPF')
+                                .replace(/Observação/, '')
+                                .trim();
+                            
+                            html += `<p><strong>${friendlyKey}:</strong> ${value}</p>`;
+                        }
                     });
+        
+                    if (html !== '') {
+                        const box = document.createElement('div');
+                        box.className = 'review-box';
+                        box.innerHTML = `<div class="section-title">${title}</div><hr class="mb-4">${html}`;
+                        reviewDataContainer.appendChild(box);
+                    }
+                }
             }
-        });
 
-        // Lógica de exibir/ocultar frequência para plano online
-        planoRadios.forEach(radio => {
-            radio.addEventListener('change', () => {
-                if (radio.value === "Online") {
+            // Lógica para navegação entre etapas (AGORA SEM VALIDACÃO NATIVA)
+            function handleNextStep(stepId, nextStepId, isConditional = false, condition) {
+                const step = document.getElementById(stepId);
+                // Usamos querySelectorAll e a nossa própria lógica de validação.
+                const requiredFields = step.querySelectorAll('[required]:not(.hidden-group input, .hidden-group textarea, .hidden-group select)');
+                let missingFields = [];
+        
+                requiredFields.forEach(field => {
+                    if (field.type === 'radio' && !document.querySelector(`input[name="${field.name}"]:checked`)) {
+                         if (!missingFields.includes(field.name)) { missingFields.push(field.name); }
+                    } else if (field.value.trim() === '') {
+                        missingFields.push(field.id || field.name);
+                    }
+                });
+        
+                if (missingFields.length > 0) {
+                    const friendlyNames = {
+                        'nomeCompleto': 'Nome Completo', 'cpf': 'CPF', 'dataNascimento': 'Data de Nascimento', 'altura': 'Altura', 'peso': 'Peso', 'Genero': 'Gênero', 'profissao': 'Profissão', 'telefoneContato': 'Telefone de Contato', 'contatoEmergencia': 'Contato de Emergência', 'rua': 'Rua', 'numeroCasa': 'Número da Casa', 'bairro': 'Bairro', 'cidade': 'Cidade', 'email': 'E-mail', 'Plano Escolhido': 'Plano Escolhido', 'frequenciaSemanal': 'Frequência Semanal', 'dataInicio': 'Data de Início', 'Planejamento Alimentar': 'Planejamento Alimentar', 'cirurgia': 'Cirurgia', 'coluna': 'Problemas de Coluna', 'articulacoes': 'Problemas nas Articulações', 'lesao': 'Lesão Grave', 'restricaoMedica': 'Restrição Médica', 'fuma': 'Fuma', 'fuma-frequencia': 'Frequência do Hábito de Fumar', 'alcool': 'Ingere Álcool', 'alcool-frequencia': 'Frequência do Álcool', 'atividadeFisica': 'Atividade Física', 'atividadeFisica-obs': 'Detalhes da Atividade Física', 'nivelMusculacao': 'Nível Musculação', 'personalTrainer': 'Personal Trainer', 'qualidadeSono': 'Qualidade do Sono', 'horasSono': 'Horas de Sono', 'objetivo': 'Objetivo (Mín. 1)', 'medicacao': 'Medicação', 'doencaCronica': 'Doença Crônica', 'alergiaAlimentar': 'Alergia Alimentar', 'pulaRefeicao': 'Pula Refeição', 'frutasVegetais': 'Frutas e Vegetais', 'quantidadeAgua': 'Quantidade de Água', 'consumoFastFood': 'Consumo de Fast Food'
+                    };
+                    const formattedMissing = missingFields.map(field => friendlyNames[field] || field).join(', ');
+                    showMessage(`Por favor, preencha/selecione os seguintes campos obrigatórios: ${formattedMissing}`, 'error');
+                    return;
+                }
+        
+                // Lógica CONDICIONAL de avanço
+                step.classList.add('hidden-group');
+                
+                if (isConditional) {
+                    // Se for a Etapa 2 e houver condição (Planejamento Alimentar Sim)
+                    if (condition) {
+                        document.getElementById(nextStepId).classList.remove('hidden-group');
+                    } else {
+                        // Se for 'Não', pula direto para a Revisão (step4)
+                        document.getElementById('step4').classList.remove('hidden-group');
+                        populateReviewPage();
+                    }
+                } else {
+                    // Avanço normal (Etapa 1 -> Etapa 2 ou Etapa 3 -> Etapa 4)
+                    document.getElementById(nextStepId).classList.remove('hidden-group');
+
+                    if (stepId === 'step3') {
+                        populateReviewPage();
+                    }
+                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        
+            // Listeners de navegação
+            nextButton1.addEventListener('click', () => {
+                const selectedPlano = document.querySelector('input[name="Plano Escolhido"]:checked');
+                const isOnline = selectedPlano && (selectedPlano.value === "Online"); 
+                
+                // Configura a obrigatoriedade do campo de frequência dinamicamente
+                if (isOnline) {
+                    frequenciaSelect.removeAttribute('required');
+                } else {
+                    frequenciaSelect.setAttribute('required', '');
+                }
+                
+                handleNextStep('step1', 'step2');
+            });
+        
+            nextButton2.addEventListener('click', () => {
+                const planejamentoAlimentar = document.querySelector('input[name="Planejamento Alimentar"]:checked').value;
+                // Vai para a Etapa 3 (Nutricional) SE Planejamento Alimentar for 'Sim'. Senão, vai para a Revisão.
+                handleNextStep('step2', 'step3', true, planejamentoAlimentar === 'Sim');
+            });
+        
+            nextButton3.addEventListener('click', () => {
+                // Vai para a Etapa 4 (Revisão)
+                handleNextStep('step3', 'step4');
+            });
+        
+            // Botões de voltar
+            backButton1.addEventListener('click', () => {
+                step2.classList.add('hidden-group');
+                step1.classList.remove('hidden-group');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            backButton2.addEventListener('click', () => {
+                step3.classList.add('hidden-group');
+                step2.classList.remove('hidden-group');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        
+            backButton3.addEventListener('click', () => {
+                const planejamentoAlimentar = document.querySelector('input[name="Planejamento Alimentar"]:checked').value;
+                step4.classList.add('hidden-group');
+                
+                // Volta para a etapa correta (3 ou 2)
+                if (planejamentoAlimentar === "Sim") {
+                    step3.classList.remove('hidden-group');
+                } else {
+                    step2.classList.remove('hidden-group');
+                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Listeners de atualização para cálculos e visibilidade
+            dataNascimentoInput.addEventListener('change', calculateAge);
+            
+            planejamentoAlimentarRadios.forEach(radio => radio.addEventListener('change', () => {
+                const selectedPlano = document.querySelector('input[name="Plano Escolhido"]:checked');
+                if (selectedPlano) {
+                    updatePlanDetails(selectedPlano.value);
+                }
+            }));
+            
+            planoRadios.forEach(radio => radio.addEventListener('change', () => {
+                updatePlanDetails(radio.value);
+        
+                // Esconde ou mostra o campo de frequência
+                const isOnline = radio.value === "Online";
+                if (isOnline) {
                     frequenciaContainer.classList.add('hidden-group');
                 } else {
                     frequenciaContainer.classList.remove('hidden-group');
                 }
+            }));
+            
+            // Autocompletar endereço com ViaCEP
+            cepInput.addEventListener('blur', () => {
+                const cep = cepInput.value.replace(/\D/g, '');
+                if (cep.length === 8) {
+                    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!("erro" in data)) {
+                                document.getElementById('rua').value = data.logradouro;
+                                document.getElementById('bairro').value = data.bairro;
+                                document.getElementById('cidade').value = data.localidade;
+                            } else {
+                                showMessage("CEP não encontrado.", 'error');
+                            }
+                        })
+                        .catch(() => {
+                            showMessage("Erro ao buscar o CEP.", 'error');
+                        });
+                }
+            });
+        
+            // Setup inicial dos campos condicionais
+            setupConditionalFields();
+
+            // Listener de SUBMISSÃO do Formulário: Garante o envio nativo
+            submitButton.addEventListener('click', (event) => {
+                // A navegação handleNextStep já tratou de todas as validações, 
+                // então deixamos o submit nativo acontecer.
+                form.submit();
             });
         });
-
-        // Setup inicial dos campos condicionais da anamnese
-        setupConditionalFields();
-
     </script>
 </body>
 </html>
