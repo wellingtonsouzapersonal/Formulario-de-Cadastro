@@ -219,7 +219,8 @@
         <!-- AÇÃO DO FORMULÁRIO ATUALIZADA PARA O NOVO ENDEREÇO DO FORMSPREE -->
         <form id="multiStepForm" action="https://formspree.io/f/xldpvlzo" method="POST" class="space-y-6">
             <!-- CAMPO INVISÍVEL DE REDIRECIONAMENTO DO FORMSPREE APÓS O ENVIO -->
-            <input type="hidden" name="_next" value="https://www.w3schools.com/html/html_forms.asp"> 
+            <!-- REMOVIDO TEMPORARIAMENTE PARA USAR A PÁGINA DE SUCESSO PADRÃO DO FORMSPREE -->
+            <!-- <input type="hidden" name="_next" value="https://www.w3schools.com/html/html_forms.asp"> --> 
             
             <!-- Etapa 1: Formulário de Cadastro -->
             <div id="step1">
@@ -645,7 +646,7 @@
                 
                 <p class="motivational-phrase">Seu corpo é capaz de tudo, é sua mente que você precisa convencer.</p>
 
-                <!-- Remove o listener do submitButton e usa o envio padrão do formulário -->
+                <!-- Este botão fará o submit POST padrão para o Formspree -->
                 <div class="flex justify-between mt-8 space-x-4">
                     <button id="backButton3" type="button" class="w-1/2 bg-gray-300 text-gray-800 font-bold hover:bg-gray-400">Voltar</button>
                     <button id="submitButton" type="submit" class="w-1/2 button-highlight">Enviar Formulário</button>
@@ -832,6 +833,7 @@
                         if (key === 'objetivo') {
                             value = formData.getAll('objetivo').join(', ');
                         } else {
+                            // Correção para mapear dados corretamente a partir de formData
                             value = data[key];
                         }
                         
@@ -874,7 +876,7 @@
         
                 if (missingFields.length > 0) {
                     const friendlyNames = {
-                        'nomeCompleto': 'Nome Completo', 'cpf': 'CPF', 'dataNascimento': 'Data de Nascimento', 'altura': 'Altura', 'peso': 'Peso', 'Genero': 'Gênero', 'profissao': 'Profissão', 'telefoneContato': 'Telefone de Contato', 'contatoEmergencia': 'Contato de Emergência', 'rua': 'Rua', 'numeroCasa': 'Número da Casa', 'bairro': 'Bairro', 'cidade': 'Cidade', 'email': 'E-mail', 'Plano Escolhido': 'Plano Escolhido', 'frequenciaSemana': 'Frequência Semanal', 'dataInicio': 'Data de Início', 'Planejamento Alimentar': 'Planejamento Alimentar', 'cirurgia': 'Cirurgia', 'coluna': 'Problemas de Coluna', 'articulacoes': 'Problemas nas Articulações', 'lesao': 'Lesão Grave', 'restricaoMedica': 'Restrição Médica', 'fuma': 'Fuma', 'fuma-frequencia': 'Frequência do Hábito de Fumar', 'alcool': 'Ingere Álcool', 'alcool-frequencia': 'Frequência do Álcool', 'atividadeFisica': 'Atividade Física', 'atividadeFisica-obs': 'Detalhes da Atividade Física', 'nivelMusculacao': 'Nível Musculação', 'personalTrainer': 'Personal Trainer', 'qualidadeSono': 'Qualidade do Sono', 'horasSono': 'Horas de Sono', 'objetivo': 'Objetivo (Mín. 1)', 'medicacao': 'Medicação', 'doencaCronica': 'Doença Crônica', 'alergiaAlimentar': 'Alergia Alimentar', 'pulaRefeicao': 'Pula Refeição', 'frutasVegetais': 'Frutas e Vegetais', 'quantidadeAgua': 'Quantidade de Água', 'consumoFastFood': 'Consumo de Fast Food'
+                        'nomeCompleto': 'Nome Completo', 'cpf': 'CPF', 'dataNascimento': 'Data de Nascimento', 'altura': 'Altura', 'peso': 'Peso', 'Genero': 'Gênero', 'profissao': 'Profissão', 'telefoneContato': 'Telefone de Contato', 'contatoEmergencia': 'Contato de Emergência', 'rua': 'Rua', 'numeroCasa': 'Número da Casa', 'bairro': 'Bairro', 'cidade': 'Cidade', 'email': 'E-mail', 'Plano Escolhido': 'Plano Escolhido', 'frequenciaSemanal': 'Frequência Semanal', 'dataInicio': 'Data de Início', 'Planejamento Alimentar': 'Planejamento Alimentar', 'cirurgia': 'Cirurgia', 'coluna': 'Problemas de Coluna', 'articulacoes': 'Problemas nas Articulações', 'lesao': 'Lesão Grave', 'restricaoMedica': 'Restrição Médica', 'fuma': 'Fuma', 'fuma-frequencia': 'Frequência do Hábito de Fumar', 'alcool': 'Ingere Álcool', 'alcool-frequencia': 'Frequência do Álcool', 'atividadeFisica': 'Atividade Física', 'atividadeFisica-obs': 'Detalhes da Atividade Física', 'nivelMusculacao': 'Nível Musculação', 'personalTrainer': 'Personal Trainer', 'qualidadeSono': 'Qualidade do Sono', 'horasSono': 'Horas de Sono', 'objetivo': 'Objetivo (Mín. 1)', 'medicacao': 'Medicação', 'doencaCronica': 'Doença Crônica', 'alergiaAlimentar': 'Alergia Alimentar', 'pulaRefeicao': 'Pula Refeição', 'frutasVegetais': 'Frutas e Vegetais', 'quantidadeAgua': 'Quantidade de Água', 'consumoFastFood': 'Consumo de Fast Food'
                     };
                     const formattedMissing = missingFields.map(field => friendlyNames[field] || field).join(', ');
                     showMessage(`Por favor, preencha/selecione os seguintes campos obrigatórios: ${formattedMissing}`, 'error');
@@ -1000,7 +1002,7 @@
             // Setup inicial dos campos condicionais
             setupConditionalFields();
 
-            // O FormSubmit lida com o evento de 'submit' padrão.
+            // O Formspree lida com o evento de 'submit' padrão.
             // Não precisamos de um event listener separado para o submitButton.
         });
     </script>
